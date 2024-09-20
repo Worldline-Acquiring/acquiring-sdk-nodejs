@@ -1,0 +1,273 @@
+{
+  "$schema" : "http://json-schema.org/draft-04/schema#",
+  "type" : "object",
+  "properties" : {
+    "amount" : {
+      "$ref" : "#/definitions/AmountData"
+    },
+    "authorizationType" : {
+      "type" : "string"
+    },
+    "cardPaymentData" : {
+      "$ref" : "#/definitions/CardPaymentData"
+    },
+    "dynamicCurrencyConversion" : {
+      "$ref" : "#/definitions/DccData"
+    },
+    "merchant" : {
+      "$ref" : "#/definitions/MerchantData"
+    },
+    "operationId" : {
+      "type" : "string"
+    },
+    "references" : {
+      "$ref" : "#/definitions/PaymentReferences"
+    },
+    "transactionTimestamp" : {
+      "type" : "string"
+    }
+  },
+  "additionalProperties" : false,
+  "definitions" : {
+    "AddressVerificationData" : {
+      "type" : "object",
+      "properties" : {
+        "cardholderAddress" : {
+          "type" : "string"
+        },
+        "cardholderPostalCode" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AmountData" : {
+      "type" : "object",
+      "properties" : {
+        "amount" : {
+          "type" : "integer"
+        },
+        "currencyCode" : {
+          "type" : "string"
+        },
+        "numberOfDecimals" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "CardOnFileData" : {
+      "type" : "object",
+      "properties" : {
+        "initialCardOnFileData" : {
+          "$ref" : "#/definitions/InitialCardOnFileData"
+        },
+        "isInitialTransaction" : {
+          "type" : "boolean"
+        },
+        "subsequentCardOnFileData" : {
+          "$ref" : "#/definitions/SubsequentCardOnFileData"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "CardPaymentData" : {
+      "type" : "object",
+      "properties" : {
+        "allowPartialApproval" : {
+          "type" : "boolean"
+        },
+        "brand" : {
+          "type" : "string"
+        },
+        "captureImmediately" : {
+          "type" : "boolean"
+        },
+        "cardData" : {
+          "$ref" : "#/definitions/PlainCardData"
+        },
+        "cardEntryMode" : {
+          "type" : "string"
+        },
+        "cardOnFileData" : {
+          "$ref" : "#/definitions/CardOnFileData"
+        },
+        "cardholderVerificationMethod" : {
+          "type" : "string"
+        },
+        "ecommerceData" : {
+          "$ref" : "#/definitions/ECommerceData"
+        },
+        "networkTokenData" : {
+          "$ref" : "#/definitions/NetworkTokenData"
+        },
+        "pointOfSaleData" : {
+          "$ref" : "#/definitions/PointOfSaleData"
+        },
+        "walletId" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "DccData" : {
+      "type" : "object",
+      "properties" : {
+        "amount" : {
+          "type" : "integer"
+        },
+        "conversionRate" : {
+          "type" : "number"
+        },
+        "currencyCode" : {
+          "type" : "string"
+        },
+        "numberOfDecimals" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ECommerceData" : {
+      "type" : "object",
+      "properties" : {
+        "addressVerificationData" : {
+          "$ref" : "#/definitions/AddressVerificationData"
+        },
+        "scaExemptionRequest" : {
+          "type" : "string"
+        },
+        "threeDSecure" : {
+          "$ref" : "#/definitions/ThreeDSecure"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "InitialCardOnFileData" : {
+      "type" : "object",
+      "properties" : {
+        "futureUse" : {
+          "type" : "string"
+        },
+        "transactionType" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "MerchantData" : {
+      "type" : "object",
+      "properties" : {
+        "address" : {
+          "type" : "string"
+        },
+        "city" : {
+          "type" : "string"
+        },
+        "countryCode" : {
+          "type" : "string"
+        },
+        "merchantCategoryCode" : {
+          "type" : "integer"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "postalCode" : {
+          "type" : "string"
+        },
+        "stateCode" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "NetworkTokenData" : {
+      "type" : "object",
+      "properties" : {
+        "cryptogram" : {
+          "type" : "string"
+        },
+        "eci" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PaymentReferences" : {
+      "type" : "object",
+      "properties" : {
+        "dynamicDescriptor" : {
+          "type" : "string"
+        },
+        "merchantReference" : {
+          "type" : "string"
+        },
+        "retrievalReferenceNumber" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PlainCardData" : {
+      "type" : "object",
+      "properties" : {
+        "cardNumber" : {
+          "type" : "string"
+        },
+        "cardSecurityCode" : {
+          "type" : "string"
+        },
+        "expiryDate" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PointOfSaleData" : {
+      "type" : "object",
+      "properties" : {
+        "terminalId" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "SubsequentCardOnFileData" : {
+      "type" : "object",
+      "properties" : {
+        "cardOnFileInitiator" : {
+          "type" : "string"
+        },
+        "initialSchemeTransactionId" : {
+          "type" : "string"
+        },
+        "transactionType" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ThreeDSecure" : {
+      "type" : "object",
+      "properties" : {
+        "authenticationValue" : {
+          "type" : "string"
+        },
+        "directoryServerTransactionId" : {
+          "type" : "string"
+        },
+        "eci" : {
+          "type" : "string"
+        },
+        "threeDSecureType" : {
+          "type" : "string"
+        },
+        "version" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    }
+  }
+}

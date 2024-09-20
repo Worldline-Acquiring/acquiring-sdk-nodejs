@@ -1,0 +1,60 @@
+{
+  "$schema" : "http://json-schema.org/draft-04/schema#",
+  "type" : "object",
+  "properties" : {
+    "amount" : {
+      "$ref" : "#/definitions/AmountData"
+    },
+    "captureSequenceNumber" : {
+      "type" : "integer"
+    },
+    "dynamicCurrencyConversion" : {
+      "$ref" : "#/definitions/DccData"
+    },
+    "isFinal" : {
+      "type" : "boolean"
+    },
+    "operationId" : {
+      "type" : "string"
+    },
+    "transactionTimestamp" : {
+      "type" : "string"
+    }
+  },
+  "additionalProperties" : false,
+  "definitions" : {
+    "AmountData" : {
+      "type" : "object",
+      "properties" : {
+        "amount" : {
+          "type" : "integer"
+        },
+        "currencyCode" : {
+          "type" : "string"
+        },
+        "numberOfDecimals" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "DccData" : {
+      "type" : "object",
+      "properties" : {
+        "amount" : {
+          "type" : "integer"
+        },
+        "conversionRate" : {
+          "type" : "number"
+        },
+        "currencyCode" : {
+          "type" : "string"
+        },
+        "numberOfDecimals" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    }
+  }
+}

@@ -1,0 +1,168 @@
+{
+  "$schema" : "http://json-schema.org/draft-04/schema#",
+  "type" : "object",
+  "properties" : {
+    "amount" : {
+      "$ref" : "#/definitions/AmountData"
+    },
+    "cardPaymentData" : {
+      "$ref" : "#/definitions/CardPaymentDataForRefund"
+    },
+    "dynamicCurrencyConversion" : {
+      "$ref" : "#/definitions/DccData"
+    },
+    "merchant" : {
+      "$ref" : "#/definitions/MerchantData"
+    },
+    "operationId" : {
+      "type" : "string"
+    },
+    "references" : {
+      "$ref" : "#/definitions/PaymentReferences"
+    },
+    "transactionTimestamp" : {
+      "type" : "string"
+    }
+  },
+  "additionalProperties" : false,
+  "definitions" : {
+    "AmountData" : {
+      "type" : "object",
+      "properties" : {
+        "amount" : {
+          "type" : "integer"
+        },
+        "currencyCode" : {
+          "type" : "string"
+        },
+        "numberOfDecimals" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "CardPaymentDataForRefund" : {
+      "type" : "object",
+      "properties" : {
+        "brand" : {
+          "type" : "string"
+        },
+        "captureImmediately" : {
+          "type" : "boolean"
+        },
+        "cardData" : {
+          "$ref" : "#/definitions/PlainCardData"
+        },
+        "cardEntryMode" : {
+          "type" : "string"
+        },
+        "networkTokenData" : {
+          "$ref" : "#/definitions/NetworkTokenData"
+        },
+        "pointOfSaleData" : {
+          "$ref" : "#/definitions/PointOfSaleData"
+        },
+        "walletId" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "DccData" : {
+      "type" : "object",
+      "properties" : {
+        "amount" : {
+          "type" : "integer"
+        },
+        "conversionRate" : {
+          "type" : "number"
+        },
+        "currencyCode" : {
+          "type" : "string"
+        },
+        "numberOfDecimals" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "MerchantData" : {
+      "type" : "object",
+      "properties" : {
+        "address" : {
+          "type" : "string"
+        },
+        "city" : {
+          "type" : "string"
+        },
+        "countryCode" : {
+          "type" : "string"
+        },
+        "merchantCategoryCode" : {
+          "type" : "integer"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "postalCode" : {
+          "type" : "string"
+        },
+        "stateCode" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "NetworkTokenData" : {
+      "type" : "object",
+      "properties" : {
+        "cryptogram" : {
+          "type" : "string"
+        },
+        "eci" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PaymentReferences" : {
+      "type" : "object",
+      "properties" : {
+        "dynamicDescriptor" : {
+          "type" : "string"
+        },
+        "merchantReference" : {
+          "type" : "string"
+        },
+        "retrievalReferenceNumber" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PlainCardData" : {
+      "type" : "object",
+      "properties" : {
+        "cardNumber" : {
+          "type" : "string"
+        },
+        "cardSecurityCode" : {
+          "type" : "string"
+        },
+        "expiryDate" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PointOfSaleData" : {
+      "type" : "object",
+      "properties" : {
+        "terminalId" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    }
+  }
+}

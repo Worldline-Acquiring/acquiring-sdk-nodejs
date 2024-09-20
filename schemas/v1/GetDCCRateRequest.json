@@ -1,0 +1,84 @@
+{
+  "$schema" : "http://json-schema.org/draft-04/schema#",
+  "type" : "object",
+  "properties" : {
+    "cardPaymentData" : {
+      "$ref" : "#/definitions/CardDataForDcc"
+    },
+    "operationId" : {
+      "type" : "string"
+    },
+    "pointOfSaleData" : {
+      "$ref" : "#/definitions/PointOfSaleDataForDcc"
+    },
+    "rateReferenceId" : {
+      "type" : "string"
+    },
+    "targetCurrency" : {
+      "type" : "string"
+    },
+    "transaction" : {
+      "$ref" : "#/definitions/TransactionDataForDcc"
+    }
+  },
+  "additionalProperties" : false,
+  "definitions" : {
+    "AmountData" : {
+      "type" : "object",
+      "properties" : {
+        "amount" : {
+          "type" : "integer"
+        },
+        "currencyCode" : {
+          "type" : "string"
+        },
+        "numberOfDecimals" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "CardDataForDcc" : {
+      "type" : "object",
+      "properties" : {
+        "bin" : {
+          "type" : "string"
+        },
+        "brand" : {
+          "type" : "string"
+        },
+        "cardCountryCode" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "PointOfSaleDataForDcc" : {
+      "type" : "object",
+      "properties" : {
+        "terminalCountryCode" : {
+          "type" : "string"
+        },
+        "terminalId" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TransactionDataForDcc" : {
+      "type" : "object",
+      "properties" : {
+        "amount" : {
+          "$ref" : "#/definitions/AmountData"
+        },
+        "transactionTimestamp" : {
+          "type" : "string"
+        },
+        "transactionType" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    }
+  }
+}

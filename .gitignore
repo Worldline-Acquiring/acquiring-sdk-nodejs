@@ -1,0 +1,11 @@
+node_modules
+/coverage
+/lib
+/docs
+logfile.txt
+.vscode
+.idea
+
+# For testing
+__tests__/config.json
+junit*.xml

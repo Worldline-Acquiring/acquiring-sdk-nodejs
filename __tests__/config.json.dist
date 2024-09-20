@@ -1,0 +1,17 @@
+{
+  "acquirerId": "ACQUIRER_ID",
+  "merchantId": "MERCHANT_ID",
+  "apiEndpoint": {
+    "host": "API_ENDPOINT_HOST",
+    "scheme": "https",
+    "port": 443
+  },
+  "oauth2": {
+    "clientId": "OAUTH2_CLIENT_ID",
+    "clientSecret": "OAUTH2_CLIENT_SECRET",
+    "tokenUri": "OAUTH2_TOKEN_URI"
+  },
+  "integrator": "INTEGRATOR",
+  "enableLogging": false,
+  "httpBinUrl": "http://httpbin.org"
+}
