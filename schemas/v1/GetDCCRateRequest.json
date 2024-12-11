@@ -49,6 +49,9 @@
         },
         "cardCountryCode" : {
           "type" : "string"
+        },
+        "cardEntryMode" : {
+          "type" : "string"
         }
       },
       "additionalProperties" : false

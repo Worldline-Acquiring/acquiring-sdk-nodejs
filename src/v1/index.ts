@@ -5,6 +5,7 @@ import { SdkContext } from "../model";
 import { newPaymentsClient } from "./payments";
 import { newRefundsClient } from "./refunds";
 import { newAccountVerificationsClient } from "./accountverifications";
+import { newBalanceInquiriesClient } from "./balanceinquiries";
 import { newTechnicalReversalsClient } from "./technicalreversals";
 import { newDynamicCurrencyConversionClient } from "./dynamiccurrencyconversion";
 import { newPingClient } from "./ping";
@@ -15,6 +16,7 @@ export function newV1Client(sdkContext: SdkContext): V1Client {
     payments: newPaymentsClient(sdkContext),
     refunds: newRefundsClient(sdkContext),
     accountVerifications: newAccountVerificationsClient(sdkContext),
+    balanceInquiries: newBalanceInquiriesClient(sdkContext),
     technicalReversals: newTechnicalReversalsClient(sdkContext),
     dynamicCurrencyConversion: newDynamicCurrencyConversionClient(sdkContext),
     ping: newPingClient(sdkContext)

@@ -17,11 +17,11 @@ async function prepareRequest(request: SdkRequest, sdkContext: SdkContext, optio
       if (key !== "extraHeaders") {
         if (Array.isArray(request.paymentContext[key])) {
           for (const value in request.paymentContext[key]) {
-            path += separator + key + "=" + request.paymentContext[key][value];
+            path += `${separator + key}=${request.paymentContext[key][value]}`;
             separator = "&";
           }
         } else {
-          path += separator + key + "=" + request.paymentContext[key];
+          path += `${separator + key}=${request.paymentContext[key]}`;
           separator = "&";
         }
       }
@@ -35,8 +35,7 @@ async function prepareRequest(request: SdkRequest, sdkContext: SdkContext, optio
   options.headers["Content-Type"] = contentType;
   options.headers["Trace-Id"] = uuid.v4();
   if (request.paymentContext?.extraHeaders) {
-    for (let i = 0; i < request.paymentContext.extraHeaders.length; i++) {
-      const header = request.paymentContext.extraHeaders[i];
+    for (const header of request.paymentContext.extraHeaders) {
       options.headers[header.key] = _.trim(header.value.replace(/\r?\n[\\s&&[^\r\n]]*/g, " "));
       extraHeaders.push(header);
     }

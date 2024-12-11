@@ -14,6 +14,9 @@
     "references" : {
       "$ref" : "#/definitions/PaymentReferences"
     },
+    "terminalData" : {
+      "$ref" : "#/definitions/TerminalData"
+    },
     "transactionTimestamp" : {
       "type" : "string"
     }
@@ -53,6 +56,9 @@
         "brand" : {
           "type" : "string"
         },
+        "brandSelector" : {
+          "type" : "string"
+        },
         "cardData" : {
           "$ref" : "#/definitions/PlainCardData"
         },
@@ -71,6 +77,9 @@
         "networkTokenData" : {
           "$ref" : "#/definitions/NetworkTokenData"
         },
+        "pointOfSaleData" : {
+          "$ref" : "#/definitions/PointOfSaleData"
+        },
         "walletId" : {
           "type" : "string"
         }
@@ -85,6 +94,18 @@
         },
         "threeDSecure" : {
           "$ref" : "#/definitions/ThreeDSecure"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "EmvDataItem" : {
+      "type" : "object",
+      "properties" : {
+        "tag" : {
+          "type" : "string"
+        },
+        "value" : {
+          "type" : "string"
         }
       },
       "additionalProperties" : false
@@ -148,9 +169,6 @@
         },
         "merchantReference" : {
           "type" : "string"
-        },
-        "retrievalReferenceNumber" : {
-          "type" : "string"
         }
       },
       "additionalProperties" : false
@@ -170,6 +188,34 @@
       },
       "additionalProperties" : false
     },
+    "PointOfSaleData" : {
+      "type" : "object",
+      "properties" : {
+        "emvData" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/EmvDataItem"
+          },
+          "uniqueItems" : false
+        },
+        "encryptedPinBlock" : {
+          "type" : "string"
+        },
+        "isResponseToPinRequest" : {
+          "type" : "boolean"
+        },
+        "isRetryWithTheSameOperationId" : {
+          "type" : "boolean"
+        },
+        "pinMasterKeyReference" : {
+          "type" : "string"
+        },
+        "track2Data" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
     "SubsequentCardOnFileData" : {
       "type" : "object",
       "properties" : {
@@ -180,6 +226,37 @@
           "type" : "string"
         },
         "transactionType" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TerminalData" : {
+      "type" : "object",
+      "properties" : {
+        "allowSingleTap" : {
+          "type" : "boolean"
+        },
+        "cardReadingCapabilities" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          },
+          "uniqueItems" : false
+        },
+        "cardholderActivatedTerminalLevel" : {
+          "type" : "string"
+        },
+        "isAttendedTerminal" : {
+          "type" : "boolean"
+        },
+        "pinEntryCapability" : {
+          "type" : "string"
+        },
+        "terminalId" : {
+          "type" : "string"
+        },
+        "terminalLocation" : {
           "type" : "string"
         }
       },

@@ -18,6 +18,7 @@ export interface ApiAccountVerificationRequest {
   merchant?: MerchantData | null;
   operationId?: string | null;
   references?: PaymentReferences | null;
+  terminalData?: TerminalData | null;
   transactionTimestamp?: string | null;
 }
 
@@ -50,17 +51,41 @@ export interface ApiActionResponseForRefund {
   responseCodeDescription?: string | null;
 }
 
+export interface ApiBalanceInquiryRequest {
+  cardPaymentData?: CardPaymentDataForBalanceInquiry | null;
+  merchant?: MerchantData | null;
+  operationId?: string | null;
+  references?: PaymentReferences | null;
+  terminalData?: TerminalData | null;
+  transactionTimestamp?: string | null;
+}
+
+export interface ApiBalanceInquiryResponse {
+  authorizationCode?: string | null;
+  availableAmount?: AmountData | null;
+  operationId?: string | null;
+  references?: ApiReferencesForResponses | null;
+  responder?: string | null;
+  responseCode?: string | null;
+  responseCodeCategory?: string | null;
+  responseCodeDescription?: string | null;
+}
+
 export interface ApiCaptureRequest {
   amount?: AmountData | null;
   captureSequenceNumber?: number | null;
   dynamicCurrencyConversion?: DccData | null;
   isFinal?: boolean | null;
   operationId?: string | null;
+  references?: PaymentReferences | null;
+  terminalData?: TerminalData | null;
   transactionTimestamp?: string | null;
 }
 
 export interface ApiCaptureRequestForRefund {
   operationId?: string | null;
+  references?: PaymentReferences | null;
+  terminalData?: TerminalData | null;
   transactionTimestamp?: string | null;
 }
 
@@ -68,6 +93,7 @@ export interface ApiIncrementRequest {
   dynamicCurrencyConversion?: DccData | null;
   incrementAmount?: AmountData | null;
   operationId?: string | null;
+  terminalData?: TerminalData | null;
   transactionTimestamp?: string | null;
 }
 
@@ -90,6 +116,7 @@ export interface ApiPaymentRefundRequest {
   dynamicCurrencyConversion?: DccData | null;
   operationId?: string | null;
   references?: PaymentReferences | null;
+  terminalData?: TerminalData | null;
   transactionTimestamp?: string | null;
 }
 
@@ -101,6 +128,7 @@ export interface ApiPaymentRequest {
   merchant?: MerchantData | null;
   operationId?: string | null;
   references?: PaymentReferences | null;
+  terminalData?: TerminalData | null;
   transactionTimestamp?: string | null;
 }
 
@@ -118,6 +146,7 @@ export interface ApiPaymentResource {
 
 export interface ApiPaymentResponse {
   cardPaymentData?: CardPaymentDataForResponse | null;
+  emvData?: EmvDataItem[] | null;
   initialAuthorizationCode?: string | null;
   operationId?: string | null;
   paymentId?: string | null;
@@ -136,6 +165,7 @@ export interface ApiPaymentReversalRequest {
   dynamicCurrencyConversion?: DccData | null;
   operationId?: string | null;
   reversalAmount?: AmountData | null;
+  terminalData?: TerminalData | null;
   transactionTimestamp?: string | null;
 }
 
@@ -179,6 +209,7 @@ export interface ApiRefundResource {
 export interface ApiRefundResponse {
   authorizationCode?: string | null;
   cardPaymentData?: CardPaymentDataForResource | null;
+  emvData?: EmvDataItem[] | null;
   operationId?: string | null;
   referencedPaymentId?: string | null;
   references?: ApiReferencesForResponses | null;
@@ -208,6 +239,7 @@ export interface ApiReversalResponse extends ApiActionResponse {
 export interface ApiTechnicalReversalRequest {
   operationId?: string | null;
   reason?: string | null;
+  terminalData?: TerminalData | null;
   transactionTimestamp?: string | null;
 }
 
@@ -223,6 +255,7 @@ export interface CardDataForDcc {
   bin?: string | null;
   brand?: string | null;
   cardCountryCode?: string | null;
+  cardEntryMode?: string | null;
 }
 
 export interface CardOnFileData {
@@ -234,6 +267,7 @@ export interface CardOnFileData {
 export interface CardPaymentData {
   allowPartialApproval?: boolean | null;
   brand?: string | null;
+  brandSelector?: string | null;
   captureImmediately?: boolean | null;
   cardData?: PlainCardData | null;
   cardEntryMode?: string | null;
@@ -245,35 +279,48 @@ export interface CardPaymentData {
   walletId?: string | null;
 }
 
+export interface CardPaymentDataForBalanceInquiry {
+  brand?: string | null;
+  brandSelector?: string | null;
+  cardData?: PlainCardData | null;
+  cardEntryMode?: string | null;
+  cardholderVerificationMethod?: string | null;
+  ecommerceData?: ECommerceData | null;
+  pointOfSaleData?: PointOfSaleData | null;
+  walletId?: string | null;
+}
+
 export interface CardPaymentDataForRefund {
   brand?: string | null;
+  brandSelector?: string | null;
   captureImmediately?: boolean | null;
   cardData?: PlainCardData | null;
   cardEntryMode?: string | null;
+  cardholderVerificationMethod?: string | null;
   networkTokenData?: NetworkTokenData | null;
-  pointOfSaleData?: PointOfSaleData | null;
   walletId?: string | null;
 }
 
 export interface CardPaymentDataForResource {
   brand?: string | null;
-  pointOfSaleData?: PointOfSaleData | null;
 }
 
 export interface CardPaymentDataForResponse {
   brand?: string | null;
   ecommerceData?: ECommerceDataForResponse | null;
-  pointOfSaleData?: PointOfSaleData | null;
+  pointOfSaleData?: PointOfSaleDataForResponse | null;
 }
 
 export interface CardPaymentDataForVerification {
   brand?: string | null;
+  brandSelector?: string | null;
   cardData?: PlainCardData | null;
   cardEntryMode?: string | null;
   cardOnFileData?: CardOnFileData | null;
   cardholderVerificationMethod?: string | null;
   ecommerceData?: ECommerceDataForAccountVerification | null;
   networkTokenData?: NetworkTokenData | null;
+  pointOfSaleData?: PointOfSaleData | null;
   walletId?: string | null;
 }
 
@@ -305,6 +352,11 @@ export interface ECommerceDataForAccountVerification {
 export interface ECommerceDataForResponse {
   addressVerificationResult?: string | null;
   cardSecurityCodeResult?: string | null;
+}
+
+export interface EmvDataItem {
+  tag?: string | null;
+  value?: string | null;
 }
 
 export interface GetDCCRateRequest {
@@ -346,7 +398,6 @@ export interface NetworkTokenData {
 export interface PaymentReferences {
   dynamicDescriptor?: string | null;
   merchantReference?: string | null;
-  retrievalReferenceNumber?: string | null;
 }
 
 export interface PlainCardData {
@@ -356,12 +407,22 @@ export interface PlainCardData {
 }
 
 export interface PointOfSaleData {
-  terminalId?: string | null;
+  emvData?: EmvDataItem[] | null;
+  encryptedPinBlock?: string | null;
+  isResponseToPinRequest?: boolean | null;
+  isRetryWithTheSameOperationId?: boolean | null;
+  pinMasterKeyReference?: string | null;
+  track2Data?: string | null;
 }
 
 export interface PointOfSaleDataForDcc {
   terminalCountryCode?: string | null;
   terminalId?: string | null;
+}
+
+export interface PointOfSaleDataForResponse {
+  panLast4Digits?: string | null;
+  pinRetryCounter?: number | null;
 }
 
 export interface RateData {
@@ -399,6 +460,16 @@ export interface SubsequentCardOnFileData {
   cardOnFileInitiator?: string | null;
   initialSchemeTransactionId?: string | null;
   transactionType?: string | null;
+}
+
+export interface TerminalData {
+  allowSingleTap?: boolean | null;
+  cardReadingCapabilities?: string[] | null;
+  cardholderActivatedTerminalLevel?: string | null;
+  isAttendedTerminal?: boolean | null;
+  pinEntryCapability?: string | null;
+  terminalId?: string | null;
+  terminalLocation?: string | null;
 }
 
 export interface ThreeDSecure {

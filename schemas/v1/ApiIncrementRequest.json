@@ -11,6 +11,9 @@
     "operationId" : {
       "type" : "string"
     },
+    "terminalData" : {
+      "$ref" : "#/definitions/TerminalData"
+    },
     "transactionTimestamp" : {
       "type" : "string"
     }
@@ -46,6 +49,37 @@
         },
         "numberOfDecimals" : {
           "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "TerminalData" : {
+      "type" : "object",
+      "properties" : {
+        "allowSingleTap" : {
+          "type" : "boolean"
+        },
+        "cardReadingCapabilities" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          },
+          "uniqueItems" : false
+        },
+        "cardholderActivatedTerminalLevel" : {
+          "type" : "string"
+        },
+        "isAttendedTerminal" : {
+          "type" : "boolean"
+        },
+        "pinEntryCapability" : {
+          "type" : "string"
+        },
+        "terminalId" : {
+          "type" : "string"
+        },
+        "terminalLocation" : {
+          "type" : "string"
         }
       },
       "additionalProperties" : false

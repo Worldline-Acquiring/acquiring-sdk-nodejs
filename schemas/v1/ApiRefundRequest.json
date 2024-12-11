@@ -47,6 +47,9 @@
         "brand" : {
           "type" : "string"
         },
+        "brandSelector" : {
+          "type" : "string"
+        },
         "captureImmediately" : {
           "type" : "boolean"
         },
@@ -56,11 +59,11 @@
         "cardEntryMode" : {
           "type" : "string"
         },
+        "cardholderVerificationMethod" : {
+          "type" : "string"
+        },
         "networkTokenData" : {
           "$ref" : "#/definitions/NetworkTokenData"
-        },
-        "pointOfSaleData" : {
-          "$ref" : "#/definitions/PointOfSaleData"
         },
         "walletId" : {
           "type" : "string"
@@ -133,9 +136,6 @@
         },
         "merchantReference" : {
           "type" : "string"
-        },
-        "retrievalReferenceNumber" : {
-          "type" : "string"
         }
       },
       "additionalProperties" : false
@@ -150,15 +150,6 @@
           "type" : "string"
         },
         "expiryDate" : {
-          "type" : "string"
-        }
-      },
-      "additionalProperties" : false
-    },
-    "PointOfSaleData" : {
-      "type" : "object",
-      "properties" : {
-        "terminalId" : {
           "type" : "string"
         }
       },
