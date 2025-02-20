@@ -43,6 +43,7 @@ describe("OAuth2 authentication", () => {
         "processing_refund",
         "processing_credittransfer",
         "processing_accountverification",
+        "processing_balanceinquiry",
         "processing_operation_reverse",
         "processing_dcc_rate",
         "services_ping"
@@ -87,6 +88,7 @@ describe("OAuth2 authentication", () => {
         "processing_refund",
         "processing_credittransfer",
         "processing_accountverification",
+        "processing_balanceinquiry",
         "processing_operation_reverse",
         "processing_dcc_rate",
         "services_ping"

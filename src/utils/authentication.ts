@@ -56,6 +56,7 @@ export class OAuth2Authenticator implements Authenticator {
           "processing_refund",
           "processing_credittransfer",
           "processing_accountverification",
+          "processing_balanceinquiry",
           "processing_operation_reverse",
           "processing_dcc_rate",
           "services_ping"

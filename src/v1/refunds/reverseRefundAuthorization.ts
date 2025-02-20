@@ -4,10 +4,10 @@
 import { validate } from "jsonschema";
 import { json } from "../../utils/communicator";
 import { PaymentContext, SdkContext, SdkResponse } from "../../model";
-import { ApiActionResponseForRefund, ApiPaymentErrorResponse, ApiPaymentReversalRequest } from "../model/domain";
+import { ApiActionResponseForRefund, ApiPaymentErrorResponse, ApiRefundReversalRequest } from "../model/domain";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const requestSchema = require("../../../schemas/v1/ApiPaymentReversalRequest.json");
+const requestSchema = require("../../../schemas/v1/ApiRefundReversalRequest.json");
 
 export function reverseRefundAuthorization(
   sdkContext: SdkContext
@@ -15,7 +15,7 @@ export function reverseRefundAuthorization(
   acquirerId: string,
   merchantId: string,
   refundId: string,
-  body: ApiPaymentReversalRequest,
+  body: ApiRefundReversalRequest,
   paymentContext?: PaymentContext | null
 ) => Promise<SdkResponse<ApiActionResponseForRefund, ApiPaymentErrorResponse>> {
   return function(acquirerId, merchantId, refundId, body, paymentContext): Promise<SdkResponse<ApiActionResponseForRefund, ApiPaymentErrorResponse>> {

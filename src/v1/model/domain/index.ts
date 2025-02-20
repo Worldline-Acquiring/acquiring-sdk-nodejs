@@ -190,6 +190,7 @@ export interface ApiRefundRequest {
   merchant?: MerchantData | null;
   operationId?: string | null;
   references?: PaymentReferences | null;
+  terminalData?: TerminalData | null;
   transactionTimestamp?: string | null;
 }
 
@@ -222,6 +223,12 @@ export interface ApiRefundResponse {
   status?: string | null;
   statusTimestamp?: string | null;
   totalAuthorizedAmount?: AmountData | null;
+}
+
+export interface ApiRefundReversalRequest {
+  operationId?: string | null;
+  terminalData?: TerminalData | null;
+  transactionTimestamp?: string | null;
 }
 
 export interface ApiRefundSummaryForResponse {
@@ -298,6 +305,7 @@ export interface CardPaymentDataForRefund {
   cardEntryMode?: string | null;
   cardholderVerificationMethod?: string | null;
   networkTokenData?: NetworkTokenData | null;
+  pointOfSaleData?: PointOfSaleData | null;
   walletId?: string | null;
 }
 

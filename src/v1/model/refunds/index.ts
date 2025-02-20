@@ -6,10 +6,10 @@ import {
   ApiActionResponseForRefund,
   ApiCaptureRequestForRefund,
   ApiPaymentErrorResponse,
-  ApiPaymentReversalRequest,
   ApiRefundRequest,
   ApiRefundResource,
-  ApiRefundResponse
+  ApiRefundResponse,
+  ApiRefundReversalRequest
 } from "../domain";
 
 export interface RefundsClient {
@@ -43,7 +43,7 @@ export interface RefundsClient {
     acquirerId: string,
     merchantId: string,
     refundId: string,
-    body: ApiPaymentReversalRequest,
+    body: ApiRefundReversalRequest,
     paymentContext?: PaymentContext | null
   ): Promise<SdkResponse<ApiActionResponseForRefund, ApiPaymentErrorResponse>>;
 }
