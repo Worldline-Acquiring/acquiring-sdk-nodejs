@@ -110,6 +110,9 @@
         "pointOfSaleData" : {
           "$ref" : "#/definitions/PointOfSaleData"
         },
+        "serviceLocationData" : {
+          "$ref" : "#/definitions/ServiceLocationData"
+        },
         "walletId" : {
           "type" : "string"
         }
@@ -157,6 +160,18 @@
         },
         "value" : {
           "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "GeoCoordinates" : {
+      "type" : "object",
+      "properties" : {
+        "latitude" : {
+          "type" : "number"
+        },
+        "longitude" : {
+          "type" : "number"
         }
       },
       "additionalProperties" : false
@@ -233,6 +248,9 @@
         "cardSecurityCode" : {
           "type" : "string"
         },
+        "cardSequenceNumber" : {
+          "type" : "integer"
+        },
         "expiryDate" : {
           "type" : "string"
         }
@@ -263,6 +281,36 @@
         },
         "track2Data" : {
           "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ServiceLocationAddress" : {
+      "type" : "object",
+      "properties" : {
+        "city" : {
+          "type" : "string"
+        },
+        "countryCode" : {
+          "type" : "string"
+        },
+        "countrySubdivisionCode" : {
+          "type" : "string"
+        },
+        "postalCode" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "ServiceLocationData" : {
+      "type" : "object",
+      "properties" : {
+        "address" : {
+          "$ref" : "#/definitions/ServiceLocationAddress"
+        },
+        "geoCoordinates" : {
+          "$ref" : "#/definitions/GeoCoordinates"
         }
       },
       "additionalProperties" : false
@@ -300,6 +348,12 @@
         },
         "isAttendedTerminal" : {
           "type" : "boolean"
+        },
+        "isOfflineApproved" : {
+          "type" : "boolean"
+        },
+        "offlineAuthorizationResponseCode" : {
+          "type" : "string"
         },
         "pinEntryCapability" : {
           "type" : "string"

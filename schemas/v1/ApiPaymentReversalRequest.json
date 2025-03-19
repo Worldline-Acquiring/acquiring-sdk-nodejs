@@ -72,6 +72,12 @@
         "isAttendedTerminal" : {
           "type" : "boolean"
         },
+        "isOfflineApproved" : {
+          "type" : "boolean"
+        },
+        "offlineAuthorizationResponseCode" : {
+          "type" : "string"
+        },
         "pinEntryCapability" : {
           "type" : "string"
         },

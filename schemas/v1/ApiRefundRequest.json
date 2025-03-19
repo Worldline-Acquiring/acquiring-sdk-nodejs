@@ -167,6 +167,9 @@
         "cardSecurityCode" : {
           "type" : "string"
         },
+        "cardSequenceNumber" : {
+          "type" : "integer"
+        },
         "expiryDate" : {
           "type" : "string"
         }
@@ -219,6 +222,12 @@
         },
         "isAttendedTerminal" : {
           "type" : "boolean"
+        },
+        "isOfflineApproved" : {
+          "type" : "boolean"
+        },
+        "offlineAuthorizationResponseCode" : {
+          "type" : "string"
         },
         "pinEntryCapability" : {
           "type" : "string"

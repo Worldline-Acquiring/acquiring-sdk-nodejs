@@ -2,6 +2,11 @@
  * This file was automatically generated.
  */
 
+export interface AdditionalResponseData {
+  merchantAdviceCode?: string | null;
+  merchantAdviceCodeDescription?: string | null;
+}
+
 export interface AddressVerificationData {
   cardholderAddress?: string | null;
   cardholderPostalCode?: string | null;
@@ -23,6 +28,7 @@ export interface ApiAccountVerificationRequest {
 }
 
 export interface ApiAccountVerificationResponse {
+  additionalResponseData?: AdditionalResponseData | null;
   authorizationCode?: string | null;
   cardPaymentData?: CardPaymentDataForResponse | null;
   operationId?: string | null;
@@ -34,6 +40,7 @@ export interface ApiAccountVerificationResponse {
 }
 
 export interface ApiActionResponse {
+  additionalResponseData?: AdditionalResponseData | null;
   operationId?: string | null;
   payment?: ApiPaymentSummaryForResponse | null;
   responder?: string | null;
@@ -43,6 +50,7 @@ export interface ApiActionResponse {
 }
 
 export interface ApiActionResponseForRefund {
+  additionalResponseData?: AdditionalResponseData | null;
   operationId?: string | null;
   refund?: ApiRefundSummaryForResponse | null;
   responder?: string | null;
@@ -61,8 +69,10 @@ export interface ApiBalanceInquiryRequest {
 }
 
 export interface ApiBalanceInquiryResponse {
+  additionalResponseData?: AdditionalResponseData | null;
   authorizationCode?: string | null;
   availableAmount?: AmountData | null;
+  cardPaymentData?: CardPaymentDataForResponse | null;
   operationId?: string | null;
   references?: ApiReferencesForResponses | null;
   responder?: string | null;
@@ -138,15 +148,14 @@ export interface ApiPaymentResource {
   operations?: SubOperation[] | null;
   paymentId?: string | null;
   references?: ApiReferencesForResponses | null;
-  retryAfter?: string | null;
   status?: string | null;
   statusTimestamp?: string | null;
   totalAuthorizedAmount?: AmountData | null;
 }
 
 export interface ApiPaymentResponse {
+  additionalResponseData?: AdditionalResponseData | null;
   cardPaymentData?: CardPaymentDataForResponse | null;
-  emvData?: EmvDataItem[] | null;
   initialAuthorizationCode?: string | null;
   operationId?: string | null;
   paymentId?: string | null;
@@ -155,7 +164,6 @@ export interface ApiPaymentResponse {
   responseCode?: string | null;
   responseCodeCategory?: string | null;
   responseCodeDescription?: string | null;
-  retryAfter?: string | null;
   status?: string | null;
   statusTimestamp?: string | null;
   totalAuthorizedAmount?: AmountData | null;
@@ -172,7 +180,6 @@ export interface ApiPaymentReversalRequest {
 export interface ApiPaymentSummaryForResponse {
   paymentId?: string | null;
   references?: ApiReferencesForResponses | null;
-  retryAfter?: string | null;
   status?: string | null;
   statusTimestamp?: string | null;
 }
@@ -201,15 +208,15 @@ export interface ApiRefundResource {
   referencedPaymentId?: string | null;
   references?: ApiReferencesForResponses | null;
   refundId?: string | null;
-  retryAfter?: string | null;
   status?: string | null;
   statusTimestamp?: string | null;
   totalAuthorizedAmount?: AmountData | null;
 }
 
 export interface ApiRefundResponse {
+  additionalResponseData?: AdditionalResponseData | null;
   authorizationCode?: string | null;
-  cardPaymentData?: CardPaymentDataForResource | null;
+  cardPaymentData?: CardPaymentDataForResponse | null;
   emvData?: EmvDataItem[] | null;
   operationId?: string | null;
   referencedPaymentId?: string | null;
@@ -219,7 +226,6 @@ export interface ApiRefundResponse {
   responseCode?: string | null;
   responseCodeCategory?: string | null;
   responseCodeDescription?: string | null;
-  retryAfter?: string | null;
   status?: string | null;
   statusTimestamp?: string | null;
   totalAuthorizedAmount?: AmountData | null;
@@ -234,7 +240,6 @@ export interface ApiRefundReversalRequest {
 export interface ApiRefundSummaryForResponse {
   references?: ApiReferencesForResponses | null;
   refundId?: string | null;
-  retryAfter?: string | null;
   status?: string | null;
   statusTimestamp?: string | null;
 }
@@ -283,6 +288,7 @@ export interface CardPaymentData {
   ecommerceData?: ECommerceData | null;
   networkTokenData?: NetworkTokenData | null;
   pointOfSaleData?: PointOfSaleData | null;
+  serviceLocationData?: ServiceLocationData | null;
   walletId?: string | null;
 }
 
@@ -367,6 +373,11 @@ export interface EmvDataItem {
   value?: string | null;
 }
 
+export interface GeoCoordinates {
+  latitude?: number | null;
+  longitude?: number | null;
+}
+
 export interface GetDCCRateRequest {
   cardPaymentData?: CardDataForDcc | null;
   operationId?: string | null;
@@ -411,6 +422,7 @@ export interface PaymentReferences {
 export interface PlainCardData {
   cardNumber?: string | null;
   cardSecurityCode?: string | null;
+  cardSequenceNumber?: number | null;
   expiryDate?: string | null;
 }
 
@@ -429,6 +441,7 @@ export interface PointOfSaleDataForDcc {
 }
 
 export interface PointOfSaleDataForResponse {
+  emvData?: EmvDataItem[] | null;
   panLast4Digits?: string | null;
   pinRetryCounter?: number | null;
 }
@@ -441,6 +454,18 @@ export interface RateData {
   quotationDateTime?: string | null;
 }
 
+export interface ServiceLocationAddress {
+  city?: string | null;
+  countryCode?: string | null;
+  countrySubdivisionCode?: string | null;
+  postalCode?: string | null;
+}
+
+export interface ServiceLocationData {
+  address?: ServiceLocationAddress | null;
+  geoCoordinates?: GeoCoordinates | null;
+}
+
 export interface SubOperation {
   amount?: AmountData | null;
   authorizationCode?: string | null;
@@ -450,7 +475,6 @@ export interface SubOperation {
   responseCode?: string | null;
   responseCodeCategory?: string | null;
   responseCodeDescription?: string | null;
-  retryAfter?: string | null;
 }
 
 export interface SubOperationForRefund {
@@ -461,7 +485,6 @@ export interface SubOperationForRefund {
   responseCode?: string | null;
   responseCodeCategory?: string | null;
   responseCodeDescription?: string | null;
-  retryAfter?: string | null;
 }
 
 export interface SubsequentCardOnFileData {
@@ -475,6 +498,8 @@ export interface TerminalData {
   cardReadingCapabilities?: string[] | null;
   cardholderActivatedTerminalLevel?: string | null;
   isAttendedTerminal?: boolean | null;
+  isOfflineApproved?: boolean | null;
+  offlineAuthorizationResponseCode?: string | null;
   pinEntryCapability?: string | null;
   terminalId?: string | null;
   terminalLocation?: string | null;
