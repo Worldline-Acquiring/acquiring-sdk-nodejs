@@ -32,6 +32,30 @@ export interface OAuth2Configuration extends BaseConfiguration {
   oauth2TokenUri: string;
   oauth2ClientId: string;
   oauth2ClientSecret: string;
+  oauth2Scopes?: string;
+}
+
+export interface OAuth2Scopes {
+  /**
+   * @returns all available scopes.
+   */
+  all(): string[];
+  /**
+   * Returns all scopes needed for all operations of the given API version.
+   */
+  forApiVersion(apiVersion: string): string[];
+  /**
+   * Returns all scopes needed for the given operation of the given API version.
+   */
+  forOperation(apiVersion: string, operationId: string): string[];
+  /**
+   * Returns all scopes needed for the given operations of the given API version.
+   */
+  forOperations(apiVersion: string, ...operationIds: string[]): string[];
+  /**
+   * Returns all scopes needed for the operations that pass the given filter.
+   */
+  forOperations(filter: (apiVersion: string, operationId: string) => boolean): string[];
 }
 
 export type Configuration = OAuth2Configuration;

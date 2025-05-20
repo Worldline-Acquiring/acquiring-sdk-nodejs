@@ -3,6 +3,7 @@ import { AddressInfo } from "net";
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import { OAuth2Authenticator } from "../../../src/utils/authentication";
+import { getAllScopes } from "../../../src/utils/oauth2Scopes";
 import { OAuth2Configuration } from "../../../src/model";
 
 /**
@@ -38,16 +39,7 @@ describe("OAuth2 authentication", () => {
         integrator: "Worldline"
       };
       const authenticator = new OAuth2Authenticator(configuration);
-      const expectedScopes = [
-        "processing_payment",
-        "processing_refund",
-        "processing_credittransfer",
-        "processing_accountverification",
-        "processing_balanceinquiry",
-        "processing_operation_reverse",
-        "processing_dcc_rate",
-        "services_ping"
-      ].join(" ");
+      const expectedScopes = getAllScopes().join(" ");
       const authorization = await authenticator.getAuthorization("", "", "", [], "/operations");
       expect(authorization).toBe(`Bearer grant_type=client_credentials&client_id=clientId&client_secret=clientSecret&scope=${expectedScopes}`);
     });
@@ -83,16 +75,7 @@ describe("OAuth2 authentication", () => {
         integrator: "Worldline"
       };
       const authenticator = new OAuth2Authenticator(configuration);
-      const expectedScopes = [
-        "processing_payment",
-        "processing_refund",
-        "processing_credittransfer",
-        "processing_accountverification",
-        "processing_balanceinquiry",
-        "processing_operation_reverse",
-        "processing_dcc_rate",
-        "services_ping"
-      ].join(" ");
+      const expectedScopes = getAllScopes().join(" ");
       let authorizedCount = 0;
       for (let i = 0; i < 10; i++) {
         authenticator.getAuthorization("", "", "", [], "/operations").then(authorization => {
@@ -262,5 +245,35 @@ describe("OAuth2 authentication", () => {
     const authenticator = new OAuth2Authenticator(configuration);
     const error = await authenticator.getAuthorization("", "", "", [], "/unsupported-path").catch(error => error);
     expect(error?.message).toBe("Scope could not be found for path /unsupported-path");
+  });
+
+  test("custom scopes", async () => {
+    const app = express();
+    app.use(
+      bodyParser.text({
+        type: "*/*"
+      })
+    );
+    app.post("/auth/realms/api/protocol/openid-connect/token", (req, res) => {
+      res.status(200).json({
+        access_token: req.body,
+        expires_in: 300
+      });
+    });
+    server = app.listen();
+    const address = server.address() as AddressInfo;
+
+    const configuration: OAuth2Configuration = {
+      oauth2TokenUri: `http://localhost:${address.port}/auth/realms/api/protocol/openid-connect/token`,
+      oauth2ClientId: "clientId",
+      oauth2ClientSecret: "clientSecret",
+      oauth2Scopes: "scope1 scope2",
+      host: "dummy",
+      integrator: "Worldline"
+    };
+    const authenticator = new OAuth2Authenticator(configuration);
+    const expectedScopes = "scope1 scope2";
+    const authorization = await authenticator.getAuthorization("", "", "", [], "/operations");
+    expect(authorization).toBe(`Bearer grant_type=client_credentials&client_id=clientId&client_secret=clientSecret&scope=${expectedScopes}`);
   });
 });

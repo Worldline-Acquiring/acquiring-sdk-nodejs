@@ -3,6 +3,7 @@ import * as https from "https";
 import { URL } from "url";
 import { Authenticator, ConnectionOptions, Header, OAuth2Configuration, ProxyConfiguration } from "../model";
 import { applyConnectionOptions, applyProxyConfiguration } from "./connection";
+import { getAllScopes } from "./oauth2Scopes";
 
 // OAuth2
 
@@ -17,7 +18,7 @@ interface PromiseFunctions {
 }
 
 interface TokenType {
-  scopes: string[];
+  scopes: string;
   promises: PromiseFunctions[];
   accessToken?: OAuth2AccessToken;
 }
@@ -37,7 +38,7 @@ export class OAuth2Authenticator implements Authenticator {
   private readonly oauth2ClientSecret: string;
   private readonly proxy?: ProxyConfiguration;
   private readonly connectionOptions?: ConnectionOptions;
-  private readonly accessTokens: Record<string, TokenType>;
+  private readonly tokenTypeMapper: (path: string) => TokenType | undefined;
 
   constructor(configuration: OAuth2Configuration) {
     this.oauth2TokenUrl = new URL(configuration.oauth2TokenUri);
@@ -46,30 +47,30 @@ export class OAuth2Authenticator implements Authenticator {
     this.proxy = configuration.proxy;
     this.connectionOptions = configuration.connectionOptions;
 
-    // Only a limited amount of scopes may be sent in one request.
-    // While at the moment all scopes fit in one request, keep this code so we can easily add more token types if necessary.
-    // The empty path will ensure that all paths will match, as each full path ends with an empty string.
-    this.accessTokens = {
-      "": {
-        scopes: [
-          "processing_payment",
-          "processing_refund",
-          "processing_credittransfer",
-          "processing_accountverification",
-          "processing_balanceinquiry",
-          "processing_operation_reverse",
-          "processing_dcc_rate",
-          "services_ping"
-        ],
+    if (configuration.oauth2Scopes) {
+      const tokenType: TokenType = {
+        scopes: configuration.oauth2Scopes,
         promises: []
-      }
-    };
+      };
+      this.tokenTypeMapper = () => tokenType;
+    } else {
+      // Only a limited amount of scopes may be sent in one request.
+      // While at the moment all scopes fit in one request, keep this code so we can easily add more token types if necessary.
+      // The empty path will ensure that all paths will match, as each full path ends with an empty string.
+      const tokenTypes: Record<string, TokenType> = {
+        "": {
+          scopes: getAllScopes().join(" "),
+          promises: []
+        }
+      };
+      this.tokenTypeMapper = path => findTokenTypeForPath(tokenTypes, path);
+    }
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async getAuthorization(_method: string, _contentType: string, _date: string, _headers: Header[], path: string): Promise<string> {
     const currentTime = new Date().getTime();
-    const tokenType = findTokenTypeForPath(this.accessTokens, path);
+    const tokenType = this.tokenTypeMapper(path);
     if (!tokenType) {
       throw new Error(`Scope could not be found for path ${path}`);
     }
@@ -127,7 +128,7 @@ export class OAuth2Authenticator implements Authenticator {
           promises.forEach(promise => promise.reject(e));
         });
 
-        req.write(`grant_type=client_credentials&client_id=${this.oauth2ClientId}&client_secret=${this.oauth2ClientSecret}&scope=${tokenType.scopes.join(" ")}`);
+        req.write(`grant_type=client_credentials&client_id=${this.oauth2ClientId}&client_secret=${this.oauth2ClientSecret}&scope=${tokenType.scopes}`);
         req.end();
       });
     }

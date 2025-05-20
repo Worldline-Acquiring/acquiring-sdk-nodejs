@@ -1,5 +1,6 @@
-import { Client, Configuration, ObfuscationRules, SdkApiError, SdkBinaryResponse, SdkBinarySuccessResponse, SdkResponse, SdkSuccessResponse } from "./model";
+import { Client, Configuration, OAuth2Scopes, ObfuscationRules, SdkApiError, SdkBinaryResponse, SdkBinarySuccessResponse, SdkResponse, SdkSuccessResponse } from "./model";
 import { newSdkContext } from "./utils/context";
+import { getAllScopes, getScopesForApiVersion, getScopesForOperation, getScopesForOperations } from "./utils/oauth2Scopes";
 import { all as obfuscateAll, allButFirst as obfuscateAllButFirst, allButLast as obfuscateAllButLast, withFixedLength as obfuscateWithFixedLength } from "./utils/obfuscate";
 import { newClient } from "./client";
 
@@ -13,6 +14,13 @@ export const obfuscate: ObfuscationRules = {
   allButLast: obfuscateAllButLast,
   allButFirst: obfuscateAllButFirst,
   withFixedLength: obfuscateWithFixedLength
+};
+
+export const oauth2Scopes: OAuth2Scopes = {
+  all: getAllScopes,
+  forApiVersion: getScopesForApiVersion,
+  forOperation: getScopesForOperation,
+  forOperations: getScopesForOperations
 };
 
 /**
