@@ -6,9 +6,9 @@ import { getRefund } from "./getRefund";
 import { captureRefund } from "./captureRefund";
 import { reverseRefundAuthorization } from "./reverseRefundAuthorization";
 import { SdkContext } from "../../model";
-import { RefundsClient } from "../model/refunds";
+import { CardRefundsClient } from "../model/cardrefunds";
 
-export function newRefundsClient(sdkContext: SdkContext): RefundsClient {
+export function newCardRefundsClient(sdkContext: SdkContext): CardRefundsClient {
   return {
     processStandaloneRefund: processStandaloneRefund(sdkContext),
     getRefund: getRefund(sdkContext),

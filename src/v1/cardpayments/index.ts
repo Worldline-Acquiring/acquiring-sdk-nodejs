@@ -8,9 +8,9 @@ import { reverseAuthorization } from "./reverseAuthorization";
 import { incrementPayment } from "./incrementPayment";
 import { createRefund } from "./createRefund";
 import { SdkContext } from "../../model";
-import { PaymentsClient } from "../model/payments";
+import { CardPaymentsClient } from "../model/cardpayments";
 
-export function newPaymentsClient(sdkContext: SdkContext): PaymentsClient {
+export function newCardPaymentsClient(sdkContext: SdkContext): CardPaymentsClient {
   return {
     processPayment: processPayment(sdkContext),
     getPaymentStatus: getPaymentStatus(sdkContext),

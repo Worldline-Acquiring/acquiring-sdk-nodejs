@@ -12,6 +12,11 @@ export interface AddressVerificationData {
   cardholderPostalCode?: string | null;
 }
 
+export interface AmountBreakdownData {
+  cashbackAmount?: AmountData | null;
+  tipAmount?: AmountData | null;
+}
+
 export interface AmountData {
   amount?: number | null;
   currencyCode?: string | null;
@@ -83,9 +88,11 @@ export interface ApiBalanceInquiryResponse {
 
 export interface ApiCaptureRequest {
   amount?: AmountData | null;
+  captureAmountBreakdownData?: CaptureAmountBreakdownData | null;
   captureSequenceNumber?: number | null;
   dynamicCurrencyConversion?: DccData | null;
   isFinal?: boolean | null;
+  marketplaceData?: MarketplaceData | null;
   operationId?: string | null;
   references?: PaymentReferences | null;
   terminalData?: TerminalData | null;
@@ -115,6 +122,7 @@ export interface ApiIncrementResponse extends ApiActionResponse {
 export interface ApiPaymentErrorResponse {
   detail?: string | null;
   instance?: string | null;
+  requestId?: string | null;
   status?: number | null;
   title?: string | null;
   type?: string | null;
@@ -132,6 +140,7 @@ export interface ApiPaymentRefundRequest {
 
 export interface ApiPaymentRequest {
   amount?: AmountData | null;
+  amountBreakdownData?: AmountBreakdownData | null;
   authorizationType?: string | null;
   cardPaymentData?: CardPaymentData | null;
   dynamicCurrencyConversion?: DccData | null;
@@ -188,6 +197,7 @@ export interface ApiReferencesForResponses {
   paymentAccountReference?: string | null;
   retrievalReferenceNumber?: string | null;
   schemeTransactionId?: string | null;
+  schemeTransactionLinkId?: string | null;
 }
 
 export interface ApiRefundRequest {
@@ -261,6 +271,10 @@ export interface ApiTechnicalReversalResponse {
   responseCode?: string | null;
   responseCodeCategory?: string | null;
   responseCodeDescription?: string | null;
+}
+
+export interface CaptureAmountBreakdownData {
+  tipAmount?: AmountData | null;
 }
 
 export interface CardDataForDcc {
@@ -378,7 +392,7 @@ export interface GeoCoordinates {
   longitude?: number | null;
 }
 
-export interface GetDCCRateRequest {
+export interface GetDccRateRequest {
   cardPaymentData?: CardDataForDcc | null;
   operationId?: string | null;
   pointOfSaleData?: PointOfSaleDataForDcc | null;
@@ -397,6 +411,11 @@ export interface GetDccRateResponse {
 export interface InitialCardOnFileData {
   futureUse?: string | null;
   transactionType?: string | null;
+}
+
+export interface MarketplaceData {
+  retailerCountryCode?: string | null;
+  retailerName?: string | null;
 }
 
 export interface MerchantData {
@@ -490,6 +509,7 @@ export interface SubOperationForRefund {
 export interface SubsequentCardOnFileData {
   cardOnFileInitiator?: string | null;
   initialSchemeTransactionId?: string | null;
+  initialSchemeTransactionLinkId?: string | null;
   transactionType?: string | null;
 }
 

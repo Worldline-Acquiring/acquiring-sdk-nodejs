@@ -5,6 +5,9 @@
     "amount" : {
       "$ref" : "#/definitions/AmountData"
     },
+    "captureAmountBreakdownData" : {
+      "$ref" : "#/definitions/CaptureAmountBreakdownData"
+    },
     "captureSequenceNumber" : {
       "type" : "integer"
     },
@@ -13,6 +16,9 @@
     },
     "isFinal" : {
       "type" : "boolean"
+    },
+    "marketplaceData" : {
+      "$ref" : "#/definitions/MarketplaceData"
     },
     "operationId" : {
       "type" : "string"
@@ -44,6 +50,15 @@
       },
       "additionalProperties" : false
     },
+    "CaptureAmountBreakdownData" : {
+      "type" : "object",
+      "properties" : {
+        "tipAmount" : {
+          "$ref" : "#/definitions/AmountData"
+        }
+      },
+      "additionalProperties" : false
+    },
     "DccData" : {
       "type" : "object",
       "properties" : {
@@ -58,6 +73,18 @@
         },
         "numberOfDecimals" : {
           "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "MarketplaceData" : {
+      "type" : "object",
+      "properties" : {
+        "retailerCountryCode" : {
+          "type" : "string"
+        },
+        "retailerName" : {
+          "type" : "string"
         }
       },
       "additionalProperties" : false

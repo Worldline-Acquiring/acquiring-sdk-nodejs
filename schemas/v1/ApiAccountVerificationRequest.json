@@ -228,6 +228,9 @@
         "initialSchemeTransactionId" : {
           "type" : "string"
         },
+        "initialSchemeTransactionLinkId" : {
+          "type" : "string"
+        },
         "transactionType" : {
           "type" : "string"
         }

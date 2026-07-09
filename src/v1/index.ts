@@ -2,8 +2,8 @@
  * This file was automatically generated.
  */
 import { SdkContext } from "../model";
-import { newPaymentsClient } from "./payments";
-import { newRefundsClient } from "./refunds";
+import { newCardPaymentsClient } from "./cardpayments";
+import { newCardRefundsClient } from "./cardrefunds";
 import { newAccountVerificationsClient } from "./accountverifications";
 import { newBalanceInquiriesClient } from "./balanceinquiries";
 import { newTechnicalReversalsClient } from "./technicalreversals";
@@ -13,8 +13,8 @@ import { V1Client } from "./model";
 
 export function newV1Client(sdkContext: SdkContext): V1Client {
   return {
-    payments: newPaymentsClient(sdkContext),
-    refunds: newRefundsClient(sdkContext),
+    cardPayments: newCardPaymentsClient(sdkContext),
+    cardRefunds: newCardRefundsClient(sdkContext),
     accountVerifications: newAccountVerificationsClient(sdkContext),
     balanceInquiries: newBalanceInquiriesClient(sdkContext),
     technicalReversals: newTechnicalReversalsClient(sdkContext),

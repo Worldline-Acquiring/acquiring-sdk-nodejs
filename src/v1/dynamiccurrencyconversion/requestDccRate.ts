@@ -4,14 +4,14 @@
 import { validate } from "jsonschema";
 import { json } from "../../utils/communicator";
 import { PaymentContext, SdkContext, SdkResponse } from "../../model";
-import { ApiPaymentErrorResponse, GetDCCRateRequest, GetDccRateResponse } from "../model/domain";
+import { ApiPaymentErrorResponse, GetDccRateRequest, GetDccRateResponse } from "../model/domain";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const requestSchema = require("../../../schemas/v1/GetDCCRateRequest.json");
+const requestSchema = require("../../../schemas/v1/GetDccRateRequest.json");
 
 export function requestDccRate(
   sdkContext: SdkContext
-): (acquirerId: string, merchantId: string, body: GetDCCRateRequest, paymentContext?: PaymentContext | null) => Promise<SdkResponse<GetDccRateResponse, ApiPaymentErrorResponse>> {
+): (acquirerId: string, merchantId: string, body: GetDccRateRequest, paymentContext?: PaymentContext | null) => Promise<SdkResponse<GetDccRateResponse, ApiPaymentErrorResponse>> {
   return function(acquirerId, merchantId, body, paymentContext): Promise<SdkResponse<GetDccRateResponse, ApiPaymentErrorResponse>> {
     // validate body
     const isValidRequest = validate(body, requestSchema);

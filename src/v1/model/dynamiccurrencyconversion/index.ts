@@ -2,7 +2,7 @@
  * This file was automatically generated.
  */
 import { PaymentContext, SdkResponse } from "../../../model/types";
-import { ApiPaymentErrorResponse, GetDCCRateRequest, GetDccRateResponse } from "../domain";
+import { ApiPaymentErrorResponse, GetDccRateRequest, GetDccRateResponse } from "../domain";
 
 export interface DynamicCurrencyConversionClient {
   /**
@@ -11,7 +11,7 @@ export interface DynamicCurrencyConversionClient {
   requestDccRate(
     acquirerId: string,
     merchantId: string,
-    body: GetDCCRateRequest,
+    body: GetDccRateRequest,
     paymentContext?: PaymentContext | null
   ): Promise<SdkResponse<GetDccRateResponse, ApiPaymentErrorResponse>>;
 }

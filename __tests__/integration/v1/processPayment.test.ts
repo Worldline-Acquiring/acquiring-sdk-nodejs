@@ -35,7 +35,7 @@ describe("processPayment", () => {
       operationId: uuid.v4()
     };
 
-    const processResponse = await client.v1.payments.processPayment(config.acquirerId, config.merchantId, body);
+    const processResponse = await client.v1.cardPayments.processPayment(config.acquirerId, config.merchantId, body);
     expect(processResponse.status).toBe(201);
     expect(processResponse.body).not.toBeNull();
 
@@ -53,7 +53,7 @@ describe("processPayment", () => {
       returnOperations: true
     };
 
-    const statusResponse = await client.v1.payments.getPaymentStatus(config.acquirerId, config.merchantId, processResponseBody.paymentId!, query);
+    const statusResponse = await client.v1.cardPayments.getPaymentStatus(config.acquirerId, config.merchantId, processResponseBody.paymentId!, query);
     expect(statusResponse.status).toBe(200);
     expect(statusResponse.body).not.toBeNull();
 

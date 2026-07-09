@@ -5,6 +5,9 @@
     "amount" : {
       "$ref" : "#/definitions/AmountData"
     },
+    "amountBreakdownData" : {
+      "$ref" : "#/definitions/AmountBreakdownData"
+    },
     "authorizationType" : {
       "type" : "string"
     },
@@ -40,6 +43,18 @@
         },
         "cardholderPostalCode" : {
           "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "AmountBreakdownData" : {
+      "type" : "object",
+      "properties" : {
+        "cashbackAmount" : {
+          "$ref" : "#/definitions/AmountData"
+        },
+        "tipAmount" : {
+          "$ref" : "#/definitions/AmountData"
         }
       },
       "additionalProperties" : false
@@ -322,6 +337,9 @@
           "type" : "string"
         },
         "initialSchemeTransactionId" : {
+          "type" : "string"
+        },
+        "initialSchemeTransactionLinkId" : {
           "type" : "string"
         },
         "transactionType" : {

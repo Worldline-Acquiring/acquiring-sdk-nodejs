@@ -3,8 +3,8 @@
  */
 import { json } from "../../utils/communicator";
 import { SdkContext, SdkResponse } from "../../model";
+import { GetRefundParams } from "../model/cardrefunds";
 import { ApiPaymentErrorResponse, ApiRefundResource } from "../model/domain";
-import { GetRefundParams } from "../model/refunds";
 
 export function getRefund(
   sdkContext: SdkContext
