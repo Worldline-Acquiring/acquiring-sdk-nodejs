@@ -1,6 +1,6 @@
 {
   "name": "acquiring-sdk-nodejs",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "SDK to communicate with the Worldline Acquiring platform using the Worldline Acquiring API",
   "homepage": "https://github.com/Worldline-Acquiring/acquiring-sdk-nodejs#readme",
   "bugs": {
@@ -35,7 +35,7 @@
     "jsonschema": "^1.4.1",
     "lodash": "^4.17.21",
     "secure-compare": "^3.0.1",
-    "uuid": "^9.0.1"
+    "uuid": "^11.0.1"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.5",
@@ -61,6 +61,11 @@
     "ts-jest": "^29.1.2",
     "typedoc": "^0.25.13",
     "typescript": "^5.4.5"
+  },
+  "overrides": {
+    "jest-junit": {
+      "uuid": "^11.1.1"
+    }
   },
   "engines": {
     "node": ">=18"
