@@ -8,6 +8,9 @@
     "captureAmountBreakdownData" : {
       "$ref" : "#/definitions/CaptureAmountBreakdownData"
     },
+    "capturePointOfSaleData" : {
+      "$ref" : "#/definitions/CapturePointOfSaleData"
+    },
     "captureSequenceNumber" : {
       "type" : "integer"
     },
@@ -59,6 +62,19 @@
       },
       "additionalProperties" : false
     },
+    "CapturePointOfSaleData" : {
+      "type" : "object",
+      "properties" : {
+        "emvData" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/EmvDataItem"
+          },
+          "uniqueItems" : false
+        }
+      },
+      "additionalProperties" : false
+    },
     "DccData" : {
       "type" : "object",
       "properties" : {
@@ -73,6 +89,18 @@
         },
         "numberOfDecimals" : {
           "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "EmvDataItem" : {
+      "type" : "object",
+      "properties" : {
+        "tag" : {
+          "type" : "string"
+        },
+        "value" : {
+          "type" : "string"
         }
       },
       "additionalProperties" : false
@@ -122,6 +150,9 @@
         },
         "isOfflineApproved" : {
           "type" : "boolean"
+        },
+        "mposDevice" : {
+          "type" : "string"
         },
         "offlineAuthorizationResponseCode" : {
           "type" : "string"

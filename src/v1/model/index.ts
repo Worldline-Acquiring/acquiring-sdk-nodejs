@@ -8,6 +8,9 @@ import { BalanceInquiriesClient } from "./balanceinquiries";
 import { TechnicalReversalsClient } from "./technicalreversals";
 import { DynamicCurrencyConversionClient } from "./dynamiccurrencyconversion";
 import { PingClient } from "./ping";
+import { DisputeManagementClient } from "./disputemanagement";
+import { DisputeDocumentsClient } from "./disputedocuments";
+import { DisputeEntriesClient } from "./disputeentries";
 
 export interface V1Client {
   readonly cardPayments: CardPaymentsClient;
@@ -17,4 +20,7 @@ export interface V1Client {
   readonly technicalReversals: TechnicalReversalsClient;
   readonly dynamicCurrencyConversion: DynamicCurrencyConversionClient;
   readonly ping: PingClient;
+  readonly disputeManagement: DisputeManagementClient;
+  readonly disputeDocuments: DisputeDocumentsClient;
+  readonly disputeEntries: DisputeEntriesClient;
 }

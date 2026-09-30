@@ -2,6 +2,12 @@
  * This file was automatically generated.
  */
 
+export interface AcceptDisputeLiabilityRequest {
+  includeEntries?: boolean | null;
+  messageText?: string | null;
+  userId?: string | null;
+}
+
 export interface AdditionalResponseData {
   merchantAdviceCode?: string | null;
   merchantAdviceCodeDescription?: string | null;
@@ -10,6 +16,12 @@ export interface AdditionalResponseData {
 export interface AddressVerificationData {
   cardholderAddress?: string | null;
   cardholderPostalCode?: string | null;
+}
+
+export interface AesUkptPinEncryptionData extends PinEncryptionData {
+  pinEncryptionType: "AES_UKPT";
+  keyGeneration?: number | null;
+  randomValue?: string | null;
 }
 
 export interface AmountBreakdownData {
@@ -89,6 +101,7 @@ export interface ApiBalanceInquiryResponse {
 export interface ApiCaptureRequest {
   amount?: AmountData | null;
   captureAmountBreakdownData?: CaptureAmountBreakdownData | null;
+  capturePointOfSaleData?: CapturePointOfSaleData | null;
   captureSequenceNumber?: number | null;
   dynamicCurrencyConversion?: DccData | null;
   isFinal?: boolean | null;
@@ -100,6 +113,7 @@ export interface ApiCaptureRequest {
 }
 
 export interface ApiCaptureRequestForRefund {
+  capturePointOfSaleData?: CapturePointOfSaleData | null;
   operationId?: string | null;
   references?: PaymentReferences | null;
   terminalData?: TerminalData | null;
@@ -273,8 +287,27 @@ export interface ApiTechnicalReversalResponse {
   responseCodeDescription?: string | null;
 }
 
+export interface ByAcquirerIds extends MerchantScope {
+  merchantScopeType: "BY_ACQUIRER_IDS";
+  acquirerIds?: string[] | null;
+}
+
+export interface ByMerchantIds extends MerchantScope {
+  merchantScopeType: "BY_MERCHANT_IDS";
+  merchantIds?: MerchantIdItem[] | null;
+}
+
+export interface ByMerchantRootIds extends MerchantScope {
+  merchantScopeType: "BY_MERCHANT_ROOT_IDS";
+  merchantRootIds?: MerchantRootIdItem[] | null;
+}
+
 export interface CaptureAmountBreakdownData {
   tipAmount?: AmountData | null;
+}
+
+export interface CapturePointOfSaleData {
+  emvData?: EmvDataItem[] | null;
 }
 
 export interface CardDataForDcc {
@@ -325,6 +358,7 @@ export interface CardPaymentDataForRefund {
   cardEntryMode?: string | null;
   cardholderVerificationMethod?: string | null;
   networkTokenData?: NetworkTokenData | null;
+  originalTransactionReferences?: OriginalTransactionReferences | null;
   pointOfSaleData?: PointOfSaleData | null;
   walletId?: string | null;
 }
@@ -352,6 +386,24 @@ export interface CardPaymentDataForVerification {
   walletId?: string | null;
 }
 
+export interface CustomerServiceData {
+  customerServiceEmail?: string | null;
+  customerServicePhoneNumber?: string | null;
+  customerServiceUrl?: string | null;
+}
+
+export interface DateRange {
+  greaterEqual?: string | null;
+  lowerEqual?: string | null;
+}
+
+export interface DateTimeRange {
+  greater?: string | null;
+  greaterEqual?: string | null;
+  lower?: string | null;
+  lowerEqual?: string | null;
+}
+
 export interface DccData {
   amount?: number | null;
   conversionRate?: number | null;
@@ -364,6 +416,112 @@ export interface DccProposal {
   rate?: RateData | null;
   rateReferenceId?: string | null;
   resultingAmount?: AmountData | null;
+}
+
+export interface DisputeCase {
+  disputeDateTimeData?: DisputeDateTimeData | null;
+  disputeId?: string | null;
+  disputeReferences?: DisputeReferences | null;
+  disputeStage?: string | null;
+  disputeStatus?: string | null;
+  disputeStatusCategory?: string | null;
+  isOpen?: boolean | null;
+  merchantBalanceAmount?: SignedAmountData | null;
+  merchantData?: DisputeMerchantData | null;
+  originalDisputeAmount?: AmountData | null;
+  originalTransactionData?: OriginalTransactionData | null;
+  schemeReason?: string | null;
+  schemeReasonDescription?: string | null;
+  unifiedCategory?: string | null;
+  unifiedReason?: string | null;
+}
+
+export interface DisputeCaseWithEntries extends DisputeCase {
+  entries?: DisputeEntry[] | null;
+}
+
+export interface DisputeDateTimeData {
+  closedDateTime?: string | null;
+  lastStatusChangedDateTime?: string | null;
+  openedDateTime?: string | null;
+  responseDueDate?: string | null;
+}
+
+export interface DisputeDocument {
+  documentId?: string | null;
+  fileName?: string | null;
+  mimeType?: string | null;
+}
+
+export interface DisputeDocumentIdItem {
+  documentId?: string | null;
+}
+
+export interface DisputeEntry {
+  documents?: DisputeDocument[] | null;
+  elaboration?: string | null;
+  entryCategory?: string | null;
+  entryDateTime?: string | null;
+  entryId?: string | null;
+  entryType?: string | null;
+  entryTypeDescription?: string | null;
+  messageText?: string | null;
+  questionnaire?: string | null;
+  responseDueDate?: string | null;
+  schemeReason?: string | null;
+  schemeReasonDescription?: string | null;
+  settlementAmount?: AmountData | null;
+  transactionAmount?: AmountData | null;
+  userId?: string | null;
+}
+
+export interface DisputeEntryResources {
+  disputeEntries?: DisputeEntryWithDisputeSummary[] | null;
+  pagination?: PaginationResponse | null;
+  requestId?: string | null;
+}
+
+export interface DisputeEntryWithDisputeSummary extends DisputeEntry {
+  disputeId?: string | null;
+  disputeSummary?: DisputeSummary | null;
+}
+
+export interface DisputeMerchantData extends DisputeMerchantDataBase {
+  merchantCategoryCode?: number | null;
+  merchantCity?: string | null;
+  merchantCountryCode?: string | null;
+  merchantName?: string | null;
+}
+
+export interface DisputeMerchantDataBase {
+  acquirerId?: string | null;
+  merchantId?: string | null;
+  merchantRootId?: string | null;
+}
+
+export interface DisputeReferences {
+  acquirerDisputeReference?: string | null;
+  schemeDisputeReference?: string | null;
+}
+
+export interface DisputeResponse {
+  dispute?: DisputeCaseWithEntries | null;
+  requestId?: string | null;
+}
+
+export interface DisputeSummary {
+  acquirerDisputeReference?: string | null;
+  merchantData?: DisputeMerchantDataBase | null;
+  originalTransactionData?: OriginalTransactionSummaryData | null;
+  schemeReason?: string | null;
+  schemeReasonDescription?: string | null;
+  unifiedCategory?: string | null;
+  unifiedReason?: string | null;
+}
+
+export interface DukptPinEncryptionData extends PinEncryptionData {
+  pinEncryptionType: "DUKPT";
+  keySerialNumber?: string | null;
 }
 
 export interface ECommerceData {
@@ -422,10 +580,28 @@ export interface MerchantData {
   address?: string | null;
   city?: string | null;
   countryCode?: string | null;
+  customerServiceData?: CustomerServiceData | null;
   merchantCategoryCode?: number | null;
   name?: string | null;
+  paymentFacilitatorId?: string | null;
   postalCode?: string | null;
   stateCode?: string | null;
+  subMerchantId?: string | null;
+  taxId?: string | null;
+}
+
+export interface MerchantIdItem {
+  acquirerId?: string | null;
+  merchantId?: string | null;
+}
+
+export interface MerchantRootIdItem {
+  acquirerId?: string | null;
+  merchantRootId?: string | null;
+}
+
+export interface MerchantScope {
+  merchantScopeType: string;
 }
 
 export interface NetworkTokenData {
@@ -433,9 +609,66 @@ export interface NetworkTokenData {
   eci?: string | null;
 }
 
+export interface OnlinePinData {
+  encryptedPinBlock?: string | null;
+  pinBlockFormat?: number | null;
+  pinEncryptionData?: PinEncryptionData | null;
+}
+
+export interface OriginalTransactionData {
+  cardholderVerificationMethod?: string | null;
+  localTransactionDateTime?: string | null;
+  paymentCategory?: string | null;
+  paymentMethodData?: PaymentMethodData | null;
+  pointOfSaleEntryMode?: string | null;
+  schemeProcessedDateTime?: string | null;
+  settlementAmount?: AmountData | null;
+  transactionAmount?: AmountData | null;
+  transactionReferences?: TransactionReferencesDispute | null;
+}
+
+export interface OriginalTransactionReferences {
+  originalSchemeTransactionId?: string | null;
+  originalSchemeTransactionLinkId?: string | null;
+}
+
+export interface OriginalTransactionSummaryData {
+  cardholderVerificationMethod?: string | null;
+  paymentCategory?: string | null;
+  paymentMethodData?: PaymentMethodDataBase | null;
+  pointOfSaleEntryMode?: string | null;
+  transactionReferences?: TransactionReferencesBase | null;
+}
+
+export interface PaginationRequest {
+  fromIndex?: number | null;
+  pageSize?: number | null;
+  searchId?: string | null;
+}
+
+export interface PaginationResponse {
+  lastIndex?: number | null;
+  searchId?: string | null;
+  totalCount?: number | null;
+}
+
+export interface PaymentMethodData extends PaymentMethodDataBase {
+  issuingCountryCode?: string | null;
+}
+
+export interface PaymentMethodDataBase {
+  maskedIdentifier?: string | null;
+  scheme?: string | null;
+  schemeBrand?: string | null;
+}
+
 export interface PaymentReferences {
   dynamicDescriptor?: string | null;
   merchantReference?: string | null;
+}
+
+export interface PinEncryptionData {
+  pinEncryptionType: string;
 }
 
 export interface PlainCardData {
@@ -447,10 +680,9 @@ export interface PlainCardData {
 
 export interface PointOfSaleData {
   emvData?: EmvDataItem[] | null;
-  encryptedPinBlock?: string | null;
   isResponseToPinRequest?: boolean | null;
   isRetryWithTheSameOperationId?: boolean | null;
-  pinMasterKeyReference?: string | null;
+  onlinePinData?: OnlinePinData | null;
   track2Data?: string | null;
 }
 
@@ -473,6 +705,45 @@ export interface RateData {
   quotationDateTime?: string | null;
 }
 
+export interface SearchDisputeEntriesRequest {
+  disputeId?: string | null;
+  entryCategories?: string[] | null;
+  entryDateTime?: DateTimeRange | null;
+  entryId?: string | null;
+  entryTypes?: string[] | null;
+  includeDisputeSummary?: boolean | null;
+  merchantScope?: MerchantScope | null;
+  pagination?: PaginationRequest | null;
+  sortOrder?: string | null;
+}
+
+export interface SearchDisputesRequest {
+  acquirerDisputeReference?: string | null;
+  acquirerReferenceNumber?: string | null;
+  closedDateTime?: DateTimeRange | null;
+  disputeId?: string | null;
+  disputeStages?: string[] | null;
+  disputeStatusCategories?: string[] | null;
+  isOpen?: boolean | null;
+  lastStatusChangedDateTime?: DateTimeRange | null;
+  merchantReference?: string | null;
+  merchantScope?: MerchantScope | null;
+  openedDateTime?: DateTimeRange | null;
+  pagination?: PaginationRequest | null;
+  paymentId?: string | null;
+  responseDueDate?: DateRange | null;
+  schemes?: string[] | null;
+  sortBy?: string | null;
+  sortOrder?: string | null;
+  unifiedCategories?: string[] | null;
+}
+
+export interface SearchDisputesResponse {
+  disputes?: DisputeCase[] | null;
+  pagination?: PaginationResponse | null;
+  requestId?: string | null;
+}
+
 export interface ServiceLocationAddress {
   city?: string | null;
   countryCode?: string | null;
@@ -483,6 +754,13 @@ export interface ServiceLocationAddress {
 export interface ServiceLocationData {
   address?: ServiceLocationAddress | null;
   geoCoordinates?: GeoCoordinates | null;
+}
+
+export interface SignedAmountData {
+  amount?: number | null;
+  currencyCode?: string | null;
+  debitCreditIndicator?: string | null;
+  numberOfDecimals?: number | null;
 }
 
 export interface SubOperation {
@@ -506,6 +784,14 @@ export interface SubOperationForRefund {
   responseCodeDescription?: string | null;
 }
 
+export interface SubmitEvidenceRequest {
+  documentIds?: DisputeDocumentIdItem[] | null;
+  elaboration?: string | null;
+  includeEntries?: boolean | null;
+  partialAmount?: AmountData | null;
+  userId?: string | null;
+}
+
 export interface SubsequentCardOnFileData {
   cardOnFileInitiator?: string | null;
   initialSchemeTransactionId?: string | null;
@@ -519,6 +805,7 @@ export interface TerminalData {
   cardholderActivatedTerminalLevel?: string | null;
   isAttendedTerminal?: boolean | null;
   isOfflineApproved?: boolean | null;
+  mposDevice?: string | null;
   offlineAuthorizationResponseCode?: string | null;
   pinEntryCapability?: string | null;
   terminalId?: string | null;
@@ -537,4 +824,30 @@ export interface TransactionDataForDcc {
   amount?: AmountData | null;
   transactionTimestamp?: string | null;
   transactionType?: string | null;
+}
+
+export interface TransactionReferencesBase {
+  acquirerReferenceNumber?: string | null;
+  merchantReference?: string | null;
+  paymentId?: string | null;
+}
+
+export interface TransactionReferencesDispute extends TransactionReferencesBase {
+  acquirerTransactionReference?: string | null;
+  merchantOperationId?: string | null;
+  retrievalReferenceNumber?: string | null;
+  schemeTransactionId?: string | null;
+  schemeTransactionLinkId?: string | null;
+  terminalId?: string | null;
+  terminalTransactionReference?: string | null;
+}
+
+export interface UploadDocumentResponse {
+  documentId?: string | null;
+  requestId?: string | null;
+}
+
+export interface ZpkPinEncryptionData extends PinEncryptionData {
+  pinEncryptionType: "ZPK";
+  zonePinKeyId?: string | null;
 }

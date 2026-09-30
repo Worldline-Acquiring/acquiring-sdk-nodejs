@@ -18,7 +18,14 @@ const scopesByOperation = {
     processBalanceInquiry: ["processing_balanceinquiry"],
     technicalReversal: ["processing_operation_reverse"],
     requestDccRate: ["processing_dcc_rate"],
-    ping: ["services_ping"]
+    ping: ["services_ping"],
+    searchDisputes: ["disputes_retrieve"],
+    getDispute: ["disputes_retrieve"],
+    acceptDisputeLiability: ["disputes_manage"],
+    submitEvidence: ["disputes_manage"],
+    uploadDisputeDocument: ["disputes_manage"],
+    getDisputeDocument: ["disputes_retrieve"],
+    searchDisputeEntries: ["disputes_retrieve"]
   }
 };
 

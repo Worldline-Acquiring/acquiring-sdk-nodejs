@@ -36,6 +36,9 @@
         "isOfflineApproved" : {
           "type" : "boolean"
         },
+        "mposDevice" : {
+          "type" : "string"
+        },
         "offlineAuthorizationResponseCode" : {
           "type" : "string"
         },

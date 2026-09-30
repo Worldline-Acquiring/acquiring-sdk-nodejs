@@ -2,6 +2,9 @@
   "$schema" : "http://json-schema.org/draft-04/schema#",
   "type" : "object",
   "properties" : {
+    "capturePointOfSaleData" : {
+      "$ref" : "#/definitions/CapturePointOfSaleData"
+    },
     "operationId" : {
       "type" : "string"
     },
@@ -17,6 +20,31 @@
   },
   "additionalProperties" : false,
   "definitions" : {
+    "CapturePointOfSaleData" : {
+      "type" : "object",
+      "properties" : {
+        "emvData" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/EmvDataItem"
+          },
+          "uniqueItems" : false
+        }
+      },
+      "additionalProperties" : false
+    },
+    "EmvDataItem" : {
+      "type" : "object",
+      "properties" : {
+        "tag" : {
+          "type" : "string"
+        },
+        "value" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
     "PaymentReferences" : {
       "type" : "object",
       "properties" : {
@@ -50,6 +78,9 @@
         },
         "isOfflineApproved" : {
           "type" : "boolean"
+        },
+        "mposDevice" : {
+          "type" : "string"
         },
         "offlineAuthorizationResponseCode" : {
           "type" : "string"

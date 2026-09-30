@@ -1,0 +1,52 @@
+{
+  "$schema" : "http://json-schema.org/draft-04/schema#",
+  "type" : "object",
+  "properties" : {
+    "documentIds" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/definitions/DisputeDocumentIdItem"
+      },
+      "uniqueItems" : false
+    },
+    "elaboration" : {
+      "type" : "string"
+    },
+    "includeEntries" : {
+      "type" : "boolean"
+    },
+    "partialAmount" : {
+      "$ref" : "#/definitions/AmountData"
+    },
+    "userId" : {
+      "type" : "string"
+    }
+  },
+  "additionalProperties" : false,
+  "definitions" : {
+    "AmountData" : {
+      "type" : "object",
+      "properties" : {
+        "amount" : {
+          "type" : "integer"
+        },
+        "currencyCode" : {
+          "type" : "string"
+        },
+        "numberOfDecimals" : {
+          "type" : "integer"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "DisputeDocumentIdItem" : {
+      "type" : "object",
+      "properties" : {
+        "documentId" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    }
+  }
+}

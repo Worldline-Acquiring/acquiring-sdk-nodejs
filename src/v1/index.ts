@@ -9,6 +9,9 @@ import { newBalanceInquiriesClient } from "./balanceinquiries";
 import { newTechnicalReversalsClient } from "./technicalreversals";
 import { newDynamicCurrencyConversionClient } from "./dynamiccurrencyconversion";
 import { newPingClient } from "./ping";
+import { newDisputeManagementClient } from "./disputemanagement";
+import { newDisputeDocumentsClient } from "./disputedocuments";
+import { newDisputeEntriesClient } from "./disputeentries";
 import { V1Client } from "./model";
 
 export function newV1Client(sdkContext: SdkContext): V1Client {
@@ -19,6 +22,9 @@ export function newV1Client(sdkContext: SdkContext): V1Client {
     balanceInquiries: newBalanceInquiriesClient(sdkContext),
     technicalReversals: newTechnicalReversalsClient(sdkContext),
     dynamicCurrencyConversion: newDynamicCurrencyConversionClient(sdkContext),
-    ping: newPingClient(sdkContext)
+    ping: newPingClient(sdkContext),
+    disputeManagement: newDisputeManagementClient(sdkContext),
+    disputeDocuments: newDisputeDocumentsClient(sdkContext),
+    disputeEntries: newDisputeEntriesClient(sdkContext)
   };
 }

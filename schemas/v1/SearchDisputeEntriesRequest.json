@@ -1,0 +1,171 @@
+{
+  "$schema" : "http://json-schema.org/draft-04/schema#",
+  "type" : "object",
+  "properties" : {
+    "disputeId" : {
+      "type" : "string"
+    },
+    "entryCategories" : {
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      },
+      "uniqueItems" : false
+    },
+    "entryDateTime" : {
+      "$ref" : "#/definitions/DateTimeRange"
+    },
+    "entryId" : {
+      "type" : "string"
+    },
+    "entryTypes" : {
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      },
+      "uniqueItems" : false
+    },
+    "includeDisputeSummary" : {
+      "type" : "boolean"
+    },
+    "merchantScope" : {
+      "$ref" : "#/definitions/MerchantScope"
+    },
+    "pagination" : {
+      "$ref" : "#/definitions/PaginationRequest"
+    },
+    "sortOrder" : {
+      "type" : "string"
+    }
+  },
+  "additionalProperties" : false,
+  "definitions" : {
+    "ByAcquirerIds" : {
+      "type" : "object",
+      "properties" : {
+        "acquirerIds" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          },
+          "uniqueItems" : false
+        },
+        "merchantScopeType" : {
+          "enum" : [ "BY_ACQUIRER_IDS" ]
+        }
+      },
+      "required" : [
+        "merchantScopeType"
+      ],
+      "additionalProperties" : false
+    },
+    "ByMerchantIds" : {
+      "type" : "object",
+      "properties" : {
+        "merchantIds" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/MerchantIdItem"
+          },
+          "uniqueItems" : false
+        },
+        "merchantScopeType" : {
+          "enum" : [ "BY_MERCHANT_IDS" ]
+        }
+      },
+      "required" : [
+        "merchantScopeType"
+      ],
+      "additionalProperties" : false
+    },
+    "ByMerchantRootIds" : {
+      "type" : "object",
+      "properties" : {
+        "merchantRootIds" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/MerchantRootIdItem"
+          },
+          "uniqueItems" : false
+        },
+        "merchantScopeType" : {
+          "enum" : [ "BY_MERCHANT_ROOT_IDS" ]
+        }
+      },
+      "required" : [
+        "merchantScopeType"
+      ],
+      "additionalProperties" : false
+    },
+    "DateTimeRange" : {
+      "type" : "object",
+      "properties" : {
+        "greater" : {
+          "type" : "string"
+        },
+        "greaterEqual" : {
+          "type" : "string"
+        },
+        "lower" : {
+          "type" : "string"
+        },
+        "lowerEqual" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "MerchantIdItem" : {
+      "type" : "object",
+      "properties" : {
+        "acquirerId" : {
+          "type" : "string"
+        },
+        "merchantId" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "MerchantRootIdItem" : {
+      "type" : "object",
+      "properties" : {
+        "acquirerId" : {
+          "type" : "string"
+        },
+        "merchantRootId" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "MerchantScope" : {
+      "oneOf" : [
+        {
+          "$ref" : "#/definitions/ByAcquirerIds"
+        },
+        {
+          "$ref" : "#/definitions/ByMerchantIds"
+        },
+        {
+          "$ref" : "#/definitions/ByMerchantRootIds"
+        }
+      ]
+    },
+    "PaginationRequest" : {
+      "type" : "object",
+      "properties" : {
+        "fromIndex" : {
+          "type" : "integer"
+        },
+        "pageSize" : {
+          "type" : "integer"
+        },
+        "searchId" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    }
+  }
+}

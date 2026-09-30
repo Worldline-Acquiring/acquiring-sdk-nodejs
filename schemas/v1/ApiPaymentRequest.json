@@ -47,6 +47,24 @@
       },
       "additionalProperties" : false
     },
+    "AesUkptPinEncryptionData" : {
+      "type" : "object",
+      "properties" : {
+        "keyGeneration" : {
+          "type" : "integer"
+        },
+        "pinEncryptionType" : {
+          "enum" : [ "AES_UKPT" ]
+        },
+        "randomValue" : {
+          "type" : "string"
+        }
+      },
+      "required" : [
+        "pinEncryptionType"
+      ],
+      "additionalProperties" : false
+    },
     "AmountBreakdownData" : {
       "type" : "object",
       "properties" : {
@@ -134,6 +152,21 @@
       },
       "additionalProperties" : false
     },
+    "CustomerServiceData" : {
+      "type" : "object",
+      "properties" : {
+        "customerServiceEmail" : {
+          "type" : "string"
+        },
+        "customerServicePhoneNumber" : {
+          "type" : "string"
+        },
+        "customerServiceUrl" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
     "DccData" : {
       "type" : "object",
       "properties" : {
@@ -150,6 +183,21 @@
           "type" : "integer"
         }
       },
+      "additionalProperties" : false
+    },
+    "DukptPinEncryptionData" : {
+      "type" : "object",
+      "properties" : {
+        "keySerialNumber" : {
+          "type" : "string"
+        },
+        "pinEncryptionType" : {
+          "enum" : [ "DUKPT" ]
+        }
+      },
+      "required" : [
+        "pinEncryptionType"
+      ],
       "additionalProperties" : false
     },
     "ECommerceData" : {
@@ -215,16 +263,28 @@
         "countryCode" : {
           "type" : "string"
         },
+        "customerServiceData" : {
+          "$ref" : "#/definitions/CustomerServiceData"
+        },
         "merchantCategoryCode" : {
           "type" : "integer"
         },
         "name" : {
           "type" : "string"
         },
+        "paymentFacilitatorId" : {
+          "type" : "string"
+        },
         "postalCode" : {
           "type" : "string"
         },
         "stateCode" : {
+          "type" : "string"
+        },
+        "subMerchantId" : {
+          "type" : "string"
+        },
+        "taxId" : {
           "type" : "string"
         }
       },
@@ -242,6 +302,21 @@
       },
       "additionalProperties" : false
     },
+    "OnlinePinData" : {
+      "type" : "object",
+      "properties" : {
+        "encryptedPinBlock" : {
+          "type" : "string"
+        },
+        "pinBlockFormat" : {
+          "type" : "integer"
+        },
+        "pinEncryptionData" : {
+          "$ref" : "#/definitions/PinEncryptionData"
+        }
+      },
+      "additionalProperties" : false
+    },
     "PaymentReferences" : {
       "type" : "object",
       "properties" : {
@@ -253,6 +328,19 @@
         }
       },
       "additionalProperties" : false
+    },
+    "PinEncryptionData" : {
+      "oneOf" : [
+        {
+          "$ref" : "#/definitions/AesUkptPinEncryptionData"
+        },
+        {
+          "$ref" : "#/definitions/DukptPinEncryptionData"
+        },
+        {
+          "$ref" : "#/definitions/ZpkPinEncryptionData"
+        }
+      ]
     },
     "PlainCardData" : {
       "type" : "object",
@@ -282,17 +370,14 @@
           },
           "uniqueItems" : false
         },
-        "encryptedPinBlock" : {
-          "type" : "string"
-        },
         "isResponseToPinRequest" : {
           "type" : "boolean"
         },
         "isRetryWithTheSameOperationId" : {
           "type" : "boolean"
         },
-        "pinMasterKeyReference" : {
-          "type" : "string"
+        "onlinePinData" : {
+          "$ref" : "#/definitions/OnlinePinData"
         },
         "track2Data" : {
           "type" : "string"
@@ -370,6 +455,9 @@
         "isOfflineApproved" : {
           "type" : "boolean"
         },
+        "mposDevice" : {
+          "type" : "string"
+        },
         "offlineAuthorizationResponseCode" : {
           "type" : "string"
         },
@@ -404,6 +492,21 @@
           "type" : "string"
         }
       },
+      "additionalProperties" : false
+    },
+    "ZpkPinEncryptionData" : {
+      "type" : "object",
+      "properties" : {
+        "pinEncryptionType" : {
+          "enum" : [ "ZPK" ]
+        },
+        "zonePinKeyId" : {
+          "type" : "string"
+        }
+      },
+      "required" : [
+        "pinEncryptionType"
+      ],
       "additionalProperties" : false
     }
   }

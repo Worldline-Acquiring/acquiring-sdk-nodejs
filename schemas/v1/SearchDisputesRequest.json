@@ -1,0 +1,218 @@
+{
+  "$schema" : "http://json-schema.org/draft-04/schema#",
+  "type" : "object",
+  "properties" : {
+    "acquirerDisputeReference" : {
+      "type" : "string"
+    },
+    "acquirerReferenceNumber" : {
+      "type" : "string"
+    },
+    "closedDateTime" : {
+      "$ref" : "#/definitions/DateTimeRange"
+    },
+    "disputeId" : {
+      "type" : "string"
+    },
+    "disputeStages" : {
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      },
+      "uniqueItems" : false
+    },
+    "disputeStatusCategories" : {
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      },
+      "uniqueItems" : false
+    },
+    "isOpen" : {
+      "type" : "boolean"
+    },
+    "lastStatusChangedDateTime" : {
+      "$ref" : "#/definitions/DateTimeRange"
+    },
+    "merchantReference" : {
+      "type" : "string"
+    },
+    "merchantScope" : {
+      "$ref" : "#/definitions/MerchantScope"
+    },
+    "openedDateTime" : {
+      "$ref" : "#/definitions/DateTimeRange"
+    },
+    "pagination" : {
+      "$ref" : "#/definitions/PaginationRequest"
+    },
+    "paymentId" : {
+      "type" : "string"
+    },
+    "responseDueDate" : {
+      "$ref" : "#/definitions/DateRange"
+    },
+    "schemes" : {
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      },
+      "uniqueItems" : false
+    },
+    "sortBy" : {
+      "type" : "string"
+    },
+    "sortOrder" : {
+      "type" : "string"
+    },
+    "unifiedCategories" : {
+      "type" : "array",
+      "items" : {
+        "type" : "string"
+      },
+      "uniqueItems" : false
+    }
+  },
+  "additionalProperties" : false,
+  "definitions" : {
+    "ByAcquirerIds" : {
+      "type" : "object",
+      "properties" : {
+        "acquirerIds" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          },
+          "uniqueItems" : false
+        },
+        "merchantScopeType" : {
+          "enum" : [ "BY_ACQUIRER_IDS" ]
+        }
+      },
+      "required" : [
+        "merchantScopeType"
+      ],
+      "additionalProperties" : false
+    },
+    "ByMerchantIds" : {
+      "type" : "object",
+      "properties" : {
+        "merchantIds" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/MerchantIdItem"
+          },
+          "uniqueItems" : false
+        },
+        "merchantScopeType" : {
+          "enum" : [ "BY_MERCHANT_IDS" ]
+        }
+      },
+      "required" : [
+        "merchantScopeType"
+      ],
+      "additionalProperties" : false
+    },
+    "ByMerchantRootIds" : {
+      "type" : "object",
+      "properties" : {
+        "merchantRootIds" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/MerchantRootIdItem"
+          },
+          "uniqueItems" : false
+        },
+        "merchantScopeType" : {
+          "enum" : [ "BY_MERCHANT_ROOT_IDS" ]
+        }
+      },
+      "required" : [
+        "merchantScopeType"
+      ],
+      "additionalProperties" : false
+    },
+    "DateRange" : {
+      "type" : "object",
+      "properties" : {
+        "greaterEqual" : {
+          "type" : "string"
+        },
+        "lowerEqual" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "DateTimeRange" : {
+      "type" : "object",
+      "properties" : {
+        "greater" : {
+          "type" : "string"
+        },
+        "greaterEqual" : {
+          "type" : "string"
+        },
+        "lower" : {
+          "type" : "string"
+        },
+        "lowerEqual" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "MerchantIdItem" : {
+      "type" : "object",
+      "properties" : {
+        "acquirerId" : {
+          "type" : "string"
+        },
+        "merchantId" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "MerchantRootIdItem" : {
+      "type" : "object",
+      "properties" : {
+        "acquirerId" : {
+          "type" : "string"
+        },
+        "merchantRootId" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    },
+    "MerchantScope" : {
+      "oneOf" : [
+        {
+          "$ref" : "#/definitions/ByAcquirerIds"
+        },
+        {
+          "$ref" : "#/definitions/ByMerchantIds"
+        },
+        {
+          "$ref" : "#/definitions/ByMerchantRootIds"
+        }
+      ]
+    },
+    "PaginationRequest" : {
+      "type" : "object",
+      "properties" : {
+        "fromIndex" : {
+          "type" : "integer"
+        },
+        "pageSize" : {
+          "type" : "integer"
+        },
+        "searchId" : {
+          "type" : "string"
+        }
+      },
+      "additionalProperties" : false
+    }
+  }
+}
