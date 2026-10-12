@@ -8,6 +8,9 @@
     "operationId" : {
       "type" : "string"
     },
+    "originalPaymentDate" : {
+      "type" : "string"
+    },
     "pointOfSaleData" : {
       "$ref" : "#/definitions/PointOfSaleDataForDcc"
     },

@@ -553,6 +553,7 @@ export interface GeoCoordinates {
 export interface GetDccRateRequest {
   cardPaymentData?: CardDataForDcc | null;
   operationId?: string | null;
+  originalPaymentDate?: string | null;
   pointOfSaleData?: PointOfSaleDataForDcc | null;
   rateReferenceId?: string | null;
   targetCurrency?: string | null;
