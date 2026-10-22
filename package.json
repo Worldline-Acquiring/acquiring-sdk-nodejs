@@ -1,6 +1,6 @@
 {
   "name": "acquiring-sdk-nodejs",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "SDK to communicate with the Worldline Acquiring platform using the Worldline Acquiring API",
   "homepage": "https://github.com/Worldline-Acquiring/acquiring-sdk-nodejs#readme",
   "bugs": {
@@ -64,6 +64,9 @@
   "overrides": {
     "jest-junit": {
       "uuid": "^11.1.1"
+    },
+    "@istanbuljs/load-nyc-config": {
+      "js-yaml": "^4.1.0"
     }
   },
   "engines": {
