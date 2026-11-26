@@ -1,6 +1,6 @@
 import * as http from "http";
 import * as https from "https";
-import * as uuid from "uuid";
+import { randomUUID } from "crypto";
 import * as FormData from "form-data";
 import * as obfuscate from "../utils/obfuscate";
 import * as headers from "../utils/headers";
@@ -16,7 +16,7 @@ function handleResponse(res: http.IncomingMessage, context: SdkContext, logger: 
       body = "<binary content>";
     } else {
       res.setEncoding("utf8");
-      res.on("data", chunk => {
+      res.on("data", (chunk) => {
         body += chunk;
       });
     }
@@ -44,7 +44,7 @@ function handleError(error: Error, context: SdkContext, logger: Logger, uuidStri
 
 export function sendJSON(options: https.RequestOptions, postData: object | undefined | null, context: SdkContext, cb: ConnectionCallback): void {
   const logger = context.getLogger();
-  const uuidString = uuid.v4();
+  const uuidString = randomUUID();
   if (context.isLoggingEnabled()) {
     // headers: case insensitive, body: case sensitive
     const obfuscatedHeaders = obfuscate.getObfuscated(options.headers, context, true);
@@ -52,11 +52,11 @@ export function sendJSON(options: https.RequestOptions, postData: object | undef
     logger("info", `Request with Message ID: ${uuidString}, ${options.method} to ${options.path}, headers: ${obfuscatedHeaders}, body: ${obfuscatedBody}`);
   }
   const h = options.protocol === "https:" ? https : http;
-  const req = h.request(options, res => {
+  const req = h.request(options, (res) => {
     handleResponse(res, context, logger, uuidString);
     cb(null, res);
   });
-  req.on("error", e => {
+  req.on("error", (e) => {
     handleError(e, context, logger, uuidString);
     cb(e, null);
   });
@@ -69,18 +69,18 @@ export function sendJSON(options: https.RequestOptions, postData: object | undef
 
 export function sendMultipart(options: https.RequestOptions, postData: MultipartFormDataObject, boundary: string, context: SdkContext, cb: ConnectionCallback): void {
   const logger = context.getLogger();
-  const uuidString = uuid.v4();
+  const uuidString = randomUUID();
   if (context.isLoggingEnabled()) {
     // headers: case insensitive
     const obfuscatedHeaders = obfuscate.getObfuscated(options.headers, context, true);
     logger("info", `Request with Message ID: ${uuidString}, ${options.method} to ${options.path}, headers: ${obfuscatedHeaders}, body: <binary data>`);
   }
   const h = options.protocol === "https:" ? https : http;
-  const req = h.request(options, res => {
+  const req = h.request(options, (res) => {
     handleResponse(res, context, logger, uuidString);
     cb(null, res);
   });
-  req.on("error", e => {
+  req.on("error", (e) => {
     handleError(e, context, logger, uuidString);
     cb(e, null);
   });
@@ -106,7 +106,7 @@ export function sendMultipart(options: https.RequestOptions, postData: Multipart
         }
         const opts: FormData.AppendOptions = {
           filename: item.fileName,
-          contentType: item.contentType
+          contentType: item.contentType,
         };
         if (item.contentLength || item.contentLength === 0) {
           opts.knownLength = item.contentLength;

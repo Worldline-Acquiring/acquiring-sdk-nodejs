@@ -1,10 +1,9 @@
-import * as dateformat from "dateformat";
 import { IncomingHttpHeaders } from "http";
 import { Header, SdkContext } from "../model";
 import { ShoppingCartExtension } from "../model/domain";
 
 export function date(): string {
-  return dateformat("GMT:ddd, dd mmm yyyy HH:MM:ss") + " GMT";
+  return new Date().toUTCString();
 }
 
 interface ServerMetaInfo {
@@ -18,16 +17,16 @@ interface ServerMetaInfo {
 export function serverMetaInfo(sdkContext: SdkContext): Header {
   const info: ServerMetaInfo = {
     sdkCreator: "Worldline",
-    sdkIdentifier: "NodejsServerSDK/v3.1.1",
+    sdkIdentifier: "NodejsServerSDK/v4.0.0",
     platformIdentifier: `${process.env["OS"]} Node.js/${process.versions.node}`,
-    integrator: sdkContext.getIntegrator()
+    integrator: sdkContext.getIntegrator(),
   };
   if (sdkContext.getShoppingCartExtension() !== null) {
     info.shoppingCartExtension = sdkContext.getShoppingCartExtension();
   }
   return {
     key: "X-WL-ServerMetaInfo",
-    value: Buffer.from(JSON.stringify(info)).toString("base64")
+    value: Buffer.from(JSON.stringify(info)).toString("base64"),
   };
 }
 

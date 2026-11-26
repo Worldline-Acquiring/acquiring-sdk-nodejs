@@ -25,14 +25,14 @@ const scopesByOperation = {
     submitEvidence: ["disputes_manage"],
     uploadDisputeDocument: ["disputes_manage"],
     getDisputeDocument: ["disputes_retrieve"],
-    searchDisputeEntries: ["disputes_retrieve"]
-  }
+    searchDisputeEntries: ["disputes_retrieve"],
+  },
 };
 
 const allScopes = new Set(
   Object.values(scopesByOperation)
-    .flatMap(m => Object.values(m))
-    .flatMap(m => m)
+    .flatMap((m) => Object.values(m))
+    .flatMap((m) => m),
 );
 
 /**

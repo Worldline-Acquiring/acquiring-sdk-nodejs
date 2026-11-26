@@ -6,15 +6,15 @@ import { PaymentContext, SdkContext, SdkResponse } from "../../model";
 import { ApiPaymentErrorResponse } from "../model/domain";
 
 export function ping(sdkContext: SdkContext): (paymentContext?: PaymentContext | null) => Promise<SdkResponse<void, ApiPaymentErrorResponse>> {
-  return function(paymentContext): Promise<SdkResponse<void, ApiPaymentErrorResponse>> {
+  return function (paymentContext): Promise<SdkResponse<void, ApiPaymentErrorResponse>> {
     return json(
       {
         method: "GET",
         modulePath: `/services/v1/ping`,
         body: null,
-        paymentContext: paymentContext
+        paymentContext: paymentContext,
       },
-      sdkContext
+      sdkContext,
     ) as Promise<SdkResponse<void, ApiPaymentErrorResponse>>;
   };
 }

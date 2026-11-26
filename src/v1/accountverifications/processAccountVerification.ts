@@ -10,14 +10,14 @@ import { ApiAccountVerificationRequest, ApiAccountVerificationResponse, ApiPayme
 const requestSchema = require("../../../schemas/v1/ApiAccountVerificationRequest.json");
 
 export function processAccountVerification(
-  sdkContext: SdkContext
+  sdkContext: SdkContext,
 ): (
   acquirerId: string,
   merchantId: string,
   body: ApiAccountVerificationRequest,
-  paymentContext?: PaymentContext | null
+  paymentContext?: PaymentContext | null,
 ) => Promise<SdkResponse<ApiAccountVerificationResponse, ApiPaymentErrorResponse>> {
-  return function(acquirerId, merchantId, body, paymentContext): Promise<SdkResponse<ApiAccountVerificationResponse, ApiPaymentErrorResponse>> {
+  return function (acquirerId, merchantId, body, paymentContext): Promise<SdkResponse<ApiAccountVerificationResponse, ApiPaymentErrorResponse>> {
     // validate body
     const isValidRequest = validate(body, requestSchema);
     if (!isValidRequest.valid) {
@@ -32,9 +32,9 @@ export function processAccountVerification(
         method: "POST",
         modulePath: `/processing/v1/${acquirerId}/${merchantId}/account-verifications`,
         body,
-        paymentContext: paymentContext
+        paymentContext: paymentContext,
       },
-      sdkContext
+      sdkContext,
     ) as Promise<SdkResponse<ApiAccountVerificationResponse, ApiPaymentErrorResponse>>;
   };
 }

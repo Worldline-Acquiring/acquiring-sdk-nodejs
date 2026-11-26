@@ -10,15 +10,15 @@ import { ApiIncrementRequest, ApiIncrementResponse, ApiPaymentErrorResponse } fr
 const requestSchema = require("../../../schemas/v1/ApiIncrementRequest.json");
 
 export function incrementPayment(
-  sdkContext: SdkContext
+  sdkContext: SdkContext,
 ): (
   acquirerId: string,
   merchantId: string,
   paymentId: string,
   body: ApiIncrementRequest,
-  paymentContext?: PaymentContext | null
+  paymentContext?: PaymentContext | null,
 ) => Promise<SdkResponse<ApiIncrementResponse, ApiPaymentErrorResponse>> {
-  return function(acquirerId, merchantId, paymentId, body, paymentContext): Promise<SdkResponse<ApiIncrementResponse, ApiPaymentErrorResponse>> {
+  return function (acquirerId, merchantId, paymentId, body, paymentContext): Promise<SdkResponse<ApiIncrementResponse, ApiPaymentErrorResponse>> {
     // validate body
     const isValidRequest = validate(body, requestSchema);
     if (!isValidRequest.valid) {
@@ -33,9 +33,9 @@ export function incrementPayment(
         method: "POST",
         modulePath: `/processing/v1/${acquirerId}/${merchantId}/payments/${paymentId}/increments`,
         body,
-        paymentContext: paymentContext
+        paymentContext: paymentContext,
       },
-      sdkContext
+      sdkContext,
     ) as Promise<SdkResponse<ApiIncrementResponse, ApiPaymentErrorResponse>>;
   };
 }

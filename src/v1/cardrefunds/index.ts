@@ -13,6 +13,6 @@ export function newCardRefundsClient(sdkContext: SdkContext): CardRefundsClient 
     processStandaloneRefund: processStandaloneRefund(sdkContext),
     getRefund: getRefund(sdkContext),
     captureRefund: captureRefund(sdkContext),
-    reverseRefundAuthorization: reverseRefundAuthorization(sdkContext)
+    reverseRefundAuthorization: reverseRefundAuthorization(sdkContext),
   };
 }

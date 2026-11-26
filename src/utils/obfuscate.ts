@@ -4,7 +4,7 @@ import { ObfuscationRule, SdkContext } from "../model";
 const REPLACECHAR = "*";
 const INDENT = 2;
 
-const ALL: ObfuscationRule = value => {
+const ALL: ObfuscationRule = (value) => {
   const l = value.length;
   return _.padStart("", l, REPLACECHAR);
 };
@@ -13,7 +13,7 @@ const ALL: ObfuscationRule = value => {
  * @returns An obfuscation rule that will keep a fixed number of characters at the end, then replaces all other characters with *.
  */
 export function allButLast(count: number): ObfuscationRule {
-  const rule: ObfuscationRule = value => {
+  const rule: ObfuscationRule = (value) => {
     const l = value.length;
     const end = value.substring(l - count);
     return _.padStart(end, l, REPLACECHAR);
@@ -32,7 +32,7 @@ export function all(): ObfuscationRule {
  * @returns An obfuscation rule that will keep a fixed number of characters at the start, then replaces all other characters with *.
  */
 export function allButFirst(count: number): ObfuscationRule {
-  const rule: ObfuscationRule = value => {
+  const rule: ObfuscationRule = (value) => {
     const l = value.length;
     const start = value.substring(0, count);
     return _.padEnd(start, l, REPLACECHAR);
@@ -45,7 +45,7 @@ export function allButFirst(count: number): ObfuscationRule {
  */
 export function withFixedLength(count: number): ObfuscationRule {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const rule: ObfuscationRule = _value => {
+  const rule: ObfuscationRule = (_value) => {
     return _.padEnd("", count, REPLACECHAR);
   };
   return rule;
@@ -66,7 +66,7 @@ function applyObfuscationRules(json: unknown, obfuscationRules: ObfuscationRules
     return json;
   }
   if (Array.isArray(json)) {
-    return json.map(value => applyObfuscationRules(value, obfuscationRules, toLowerCase));
+    return json.map((value) => applyObfuscationRules(value, obfuscationRules, toLowerCase));
   }
   const entries = Object.entries(json).map(([key, value]) => {
     const newValue =
@@ -86,7 +86,7 @@ export function getObfuscated(input: any, context: SdkContext, caseInsensitive =
   if (typeof input === "string") {
     try {
       input = JSON.parse(input);
-    } catch (e) {
+    } catch {
       const logger = context.getLogger();
       if (context.isLoggingEnabled()) {
         logger("warn", "Cannot parse input to JSON: " + input);

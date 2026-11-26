@@ -10,9 +10,9 @@ import { ApiPaymentErrorResponse, DisputeEntryResources, SearchDisputeEntriesReq
 const requestSchema = require("../../../schemas/v1/SearchDisputeEntriesRequest.json");
 
 export function searchDisputeEntries(
-  sdkContext: SdkContext
+  sdkContext: SdkContext,
 ): (body: SearchDisputeEntriesRequest, paymentContext?: PaymentContext | null) => Promise<SdkResponse<DisputeEntryResources, ApiPaymentErrorResponse>> {
-  return function(body, paymentContext): Promise<SdkResponse<DisputeEntryResources, ApiPaymentErrorResponse>> {
+  return function (body, paymentContext): Promise<SdkResponse<DisputeEntryResources, ApiPaymentErrorResponse>> {
     // validate body
     const isValidRequest = validate(body, requestSchema);
     if (!isValidRequest.valid) {
@@ -27,9 +27,9 @@ export function searchDisputeEntries(
         method: "POST",
         modulePath: `/dispute-management/v1/dispute-entries/search`,
         body,
-        paymentContext: paymentContext
+        paymentContext: paymentContext,
       },
-      sdkContext
+      sdkContext,
     ) as Promise<SdkResponse<DisputeEntryResources, ApiPaymentErrorResponse>>;
   };
 }

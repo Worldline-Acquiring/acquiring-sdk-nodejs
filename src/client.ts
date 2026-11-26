@@ -10,6 +10,6 @@ export function newClient(sdkContext: SdkContext): Client {
   return {
     v1: newV1Client(sdkContext),
 
-    context: sdkContext
+    context: sdkContext,
   };
 }

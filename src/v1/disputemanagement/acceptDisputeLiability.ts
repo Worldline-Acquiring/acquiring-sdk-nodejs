@@ -10,9 +10,9 @@ import { AcceptDisputeLiabilityRequest, ApiPaymentErrorResponse, DisputeResponse
 const requestSchema = require("../../../schemas/v1/AcceptDisputeLiabilityRequest.json");
 
 export function acceptDisputeLiability(
-  sdkContext: SdkContext
+  sdkContext: SdkContext,
 ): (disputeId: string, body: AcceptDisputeLiabilityRequest, paymentContext?: PaymentContext | null) => Promise<SdkResponse<DisputeResponse, ApiPaymentErrorResponse>> {
-  return function(disputeId, body, paymentContext): Promise<SdkResponse<DisputeResponse, ApiPaymentErrorResponse>> {
+  return function (disputeId, body, paymentContext): Promise<SdkResponse<DisputeResponse, ApiPaymentErrorResponse>> {
     // validate body
     const isValidRequest = validate(body, requestSchema);
     if (!isValidRequest.valid) {
@@ -27,9 +27,9 @@ export function acceptDisputeLiability(
         method: "POST",
         modulePath: `/dispute-management/v1/disputes/${disputeId}/accept`,
         body,
-        paymentContext: paymentContext
+        paymentContext: paymentContext,
       },
-      sdkContext
+      sdkContext,
     ) as Promise<SdkResponse<DisputeResponse, ApiPaymentErrorResponse>>;
   };
 }

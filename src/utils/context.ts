@@ -27,7 +27,7 @@ class SdkContextImpl implements SdkContext {
     this.endpoint = {
       host: configuration.host,
       scheme: configuration.scheme ?? "https",
-      port: configuration.port ?? defaultPort(configuration.scheme ?? "https")
+      port: configuration.port ?? defaultPort(configuration.scheme ?? "https"),
     };
     this.proxy = configuration.proxy;
     this.connectionOptions = configuration.connectionOptions;
@@ -46,7 +46,7 @@ class SdkContextImpl implements SdkContext {
         this.shoppingCartExtension = configuration.shoppingCartExtension;
       } else {
         throw new Error(
-          "shoppingCartExtension is missing a required property (creator / name / version). Your shoppingCartExtension: " + JSON.stringify(configuration.shoppingCartExtension)
+          "shoppingCartExtension is missing a required property (creator / name / version). Your shoppingCartExtension: " + JSON.stringify(configuration.shoppingCartExtension),
         );
       }
     }

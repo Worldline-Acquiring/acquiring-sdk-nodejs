@@ -1,4 +1,4 @@
-import * as uuid from "uuid";
+import { randomUUID } from "crypto";
 import { assertSuccess } from "../../src";
 import { SdkApiError, SdkBinaryResponse, SdkResponse } from "../../src/model";
 import { Readable } from "stream";
@@ -21,8 +21,8 @@ describe("assertSuccess", () => {
         status: 200,
         isSuccess: true,
         body: {
-          result: "OK"
-        }
+          result: "OK",
+        },
       };
       const asserted = assertSuccess(response);
       expect(asserted).toBe(response);
@@ -37,8 +37,8 @@ describe("assertSuccess", () => {
         status: 500,
         isSuccess: false,
         body: {
-          errorId: uuid.v4()
-        }
+          errorId: randomUUID(),
+        },
       };
       try {
         assertSuccess(response);
@@ -61,8 +61,8 @@ describe("assertSuccess", () => {
         file: {
           contentType: "text/plain",
           contentLength: 0,
-          filename: "test.txt"
-        }
+          filename: "test.txt",
+        },
       };
       const asserted = assertSuccess(response);
       expect(asserted).toBe(response);
@@ -78,8 +78,8 @@ describe("assertSuccess", () => {
         status: 500,
         isSuccess: false,
         body: {
-          errorId: uuid.v4()
-        }
+          errorId: randomUUID(),
+        },
       };
       try {
         assertSuccess(response);

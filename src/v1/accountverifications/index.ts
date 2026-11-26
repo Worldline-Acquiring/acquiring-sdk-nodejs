@@ -7,6 +7,6 @@ import { AccountVerificationsClient } from "../model/accountverifications";
 
 export function newAccountVerificationsClient(sdkContext: SdkContext): AccountVerificationsClient {
   return {
-    processAccountVerification: processAccountVerification(sdkContext)
+    processAccountVerification: processAccountVerification(sdkContext),
   };
 }

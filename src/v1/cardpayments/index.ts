@@ -17,6 +17,6 @@ export function newCardPaymentsClient(sdkContext: SdkContext): CardPaymentsClien
     simpleCaptureOfPayment: simpleCaptureOfPayment(sdkContext),
     reverseAuthorization: reverseAuthorization(sdkContext),
     incrementPayment: incrementPayment(sdkContext),
-    createRefund: createRefund(sdkContext)
+    createRefund: createRefund(sdkContext),
   };
 }

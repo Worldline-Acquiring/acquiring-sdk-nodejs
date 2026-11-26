@@ -10,9 +10,9 @@ import { ApiPaymentErrorResponse, GetDccRateRequest, GetDccRateResponse } from "
 const requestSchema = require("../../../schemas/v1/GetDccRateRequest.json");
 
 export function requestDccRate(
-  sdkContext: SdkContext
+  sdkContext: SdkContext,
 ): (acquirerId: string, merchantId: string, body: GetDccRateRequest, paymentContext?: PaymentContext | null) => Promise<SdkResponse<GetDccRateResponse, ApiPaymentErrorResponse>> {
-  return function(acquirerId, merchantId, body, paymentContext): Promise<SdkResponse<GetDccRateResponse, ApiPaymentErrorResponse>> {
+  return function (acquirerId, merchantId, body, paymentContext): Promise<SdkResponse<GetDccRateResponse, ApiPaymentErrorResponse>> {
     // validate body
     const isValidRequest = validate(body, requestSchema);
     if (!isValidRequest.valid) {
@@ -27,9 +27,9 @@ export function requestDccRate(
         method: "POST",
         modulePath: `/services/v1/${acquirerId}/${merchantId}/dcc-rates`,
         body,
-        paymentContext: paymentContext
+        paymentContext: paymentContext,
       },
-      sdkContext
+      sdkContext,
     ) as Promise<SdkResponse<GetDccRateResponse, ApiPaymentErrorResponse>>;
   };
 }

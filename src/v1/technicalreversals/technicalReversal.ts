@@ -10,15 +10,15 @@ import { ApiPaymentErrorResponse, ApiTechnicalReversalRequest, ApiTechnicalRever
 const requestSchema = require("../../../schemas/v1/ApiTechnicalReversalRequest.json");
 
 export function technicalReversal(
-  sdkContext: SdkContext
+  sdkContext: SdkContext,
 ): (
   acquirerId: string,
   merchantId: string,
   operationId: string,
   body: ApiTechnicalReversalRequest,
-  paymentContext?: PaymentContext | null
+  paymentContext?: PaymentContext | null,
 ) => Promise<SdkResponse<ApiTechnicalReversalResponse, ApiPaymentErrorResponse>> {
-  return function(acquirerId, merchantId, operationId, body, paymentContext): Promise<SdkResponse<ApiTechnicalReversalResponse, ApiPaymentErrorResponse>> {
+  return function (acquirerId, merchantId, operationId, body, paymentContext): Promise<SdkResponse<ApiTechnicalReversalResponse, ApiPaymentErrorResponse>> {
     // validate body
     const isValidRequest = validate(body, requestSchema);
     if (!isValidRequest.valid) {
@@ -33,9 +33,9 @@ export function technicalReversal(
         method: "POST",
         modulePath: `/processing/v1/${acquirerId}/${merchantId}/operations/${operationId}/reverse`,
         body,
-        paymentContext: paymentContext
+        paymentContext: paymentContext,
       },
-      sdkContext
+      sdkContext,
     ) as Promise<SdkResponse<ApiTechnicalReversalResponse, ApiPaymentErrorResponse>>;
   };
 }

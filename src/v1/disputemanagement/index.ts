@@ -13,6 +13,6 @@ export function newDisputeManagementClient(sdkContext: SdkContext): DisputeManag
     searchDisputes: searchDisputes(sdkContext),
     getDispute: getDispute(sdkContext),
     acceptDisputeLiability: acceptDisputeLiability(sdkContext),
-    submitEvidence: submitEvidence(sdkContext)
+    submitEvidence: submitEvidence(sdkContext),
   };
 }

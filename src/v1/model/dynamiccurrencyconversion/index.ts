@@ -12,6 +12,6 @@ export interface DynamicCurrencyConversionClient {
     acquirerId: string,
     merchantId: string,
     body: GetDccRateRequest,
-    paymentContext?: PaymentContext | null
+    paymentContext?: PaymentContext | null,
   ): Promise<SdkResponse<GetDccRateResponse, ApiPaymentErrorResponse>>;
 }

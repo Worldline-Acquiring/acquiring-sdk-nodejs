@@ -14,17 +14,15 @@ describe("communicator", () => {
   const testData = [
     [200, true],
     [404, false],
-    [500, false]
+    [500, false],
   ];
   let sdkContext: SdkContext;
 
   beforeAll(() => {
-    nock("http://oauth2")
-      .post("/auth/realms/api/protocol/openid-connect/token")
-      .reply(200, {
-        access_token: "dummy",
-        expires_in: 300
-      });
+    nock("http://oauth2").post("/auth/realms/api/protocol/openid-connect/token").reply(200, {
+      access_token: "dummy",
+      expires_in: 300,
+    });
 
     sdkContext = newSdkContext({
       host: "test",
@@ -34,23 +32,27 @@ describe("communicator", () => {
       oauth2ClientId: "dummy",
       oauth2ClientSecret: "dummy",
       oauth2TokenUri: "http://oauth2/auth/realms/api/protocol/openid-connect/token",
-      integrator: "dummy"
+      integrator: "dummy",
     });
   });
 
+  afterAll(() => {
+    // nock patches the http modules of the process, which are shared by all test files running in the same worker
+    nock.cleanAll();
+    nock.restore();
+  });
+
   each(testData).test("with JSON response with status %d", async (status, isSuccess) => {
-    nock("http://test")
-      .get("/operations/json")
-      .reply(status, {
-        id: 1
-      });
+    nock("http://test").get("/operations/json").reply(status, {
+      id: 1,
+    });
 
     const response = await communicator.json(
       {
         method: "GET",
-        modulePath: "/operations/json"
+        modulePath: "/operations/json",
       },
-      sdkContext
+      sdkContext,
     );
     expect(response.status).toBe(status);
     expect(response.body).toHaveProperty("id", 1);
@@ -59,23 +61,21 @@ describe("communicator", () => {
   });
 
   describe("with JSON response requested as binary response", () => {
-    test("with status 200", done => {
-      nock("http://test")
-        .get("/operations/json")
-        .reply(200, {
-          id: 1
-        });
+    test("with status 200", (done) => {
+      nock("http://test").get("/operations/json").reply(200, {
+        id: 1,
+      });
 
       communicator
         .json(
           {
             method: "GET",
             modulePath: "/operations/json",
-            expectBinaryResponse: true
+            expectBinaryResponse: true,
           },
-          sdkContext
+          sdkContext,
         )
-        .then(response => {
+        .then((response) => {
           expect(response.status).toBe(200);
           expect(response.body).toBeInstanceOf(Readable);
           expect(response.isSuccess).toBe(true);
@@ -86,7 +86,7 @@ describe("communicator", () => {
 
           const body = response.body as Readable;
           let content = "";
-          body.on("data", chunk => {
+          body.on("data", (chunk) => {
             content += chunk;
           });
           body.on("end", () => {
@@ -99,18 +99,16 @@ describe("communicator", () => {
     });
 
     each(testData.slice(1)).test("with status %d", async (status, isSuccess) => {
-      nock("http://test")
-        .get("/operations/json")
-        .reply(status, {
-          id: 1
-        });
+      nock("http://test").get("/operations/json").reply(status, {
+        id: 1,
+      });
 
       const response = await communicator.json(
         {
           method: "GET",
-          modulePath: "/operations/json"
+          modulePath: "/operations/json",
         },
-        sdkContext
+        sdkContext,
       );
       expect(response.status).toBe(status);
       expect(response.body).toHaveProperty("id", 1);
@@ -120,7 +118,7 @@ describe("communicator", () => {
   });
 
   each(testData).describe("with binary response with status %d", (status, isSuccess) => {
-    test("with full headers", done => {
+    test("with full headers", (done) => {
       const responseBody = "Test response";
       const contentLength = responseBody.length;
       const contentType = "application/octet-stream";
@@ -131,18 +129,18 @@ describe("communicator", () => {
         .reply(status, responseBody, {
           "Content-Type": contentType,
           "Content-Length": contentLength.toString(),
-          "Content-Disposition": `attachment; filename="${filename}"`
+          "Content-Disposition": `attachment; filename="${filename}"`,
         });
 
       communicator
         .json(
           {
             method: "GET",
-            modulePath: "/operations/binary"
+            modulePath: "/operations/binary",
           },
-          sdkContext
+          sdkContext,
         )
-        .then(response => {
+        .then((response) => {
           expect(response.status).toBe(status);
           expect(response.body).toBeInstanceOf(Readable);
           expect(response.isSuccess).toBe(isSuccess);
@@ -154,7 +152,7 @@ describe("communicator", () => {
 
           const body = response.body as Readable;
           let content = "";
-          body.on("data", chunk => {
+          body.on("data", (chunk) => {
             content += chunk;
           });
           body.on("end", () => {
@@ -165,25 +163,23 @@ describe("communicator", () => {
         });
     });
 
-    test("with minimal headers", done => {
+    test("with minimal headers", (done) => {
       const responseBody = "Test response";
       const contentType = "application/octet-stream";
 
-      nock("http://test")
-        .get("/operations/binary")
-        .reply(status, responseBody, {
-          "Content-Type": contentType
-        });
+      nock("http://test").get("/operations/binary").reply(status, responseBody, {
+        "Content-Type": contentType,
+      });
 
       communicator
         .json(
           {
             method: "GET",
-            modulePath: "/operations/binary"
+            modulePath: "/operations/binary",
           },
-          sdkContext
+          sdkContext,
         )
-        .then(response => {
+        .then((response) => {
           expect(response.status).toBe(status);
           expect(response.body).toBeInstanceOf(Readable);
           expect(response.isSuccess).toBe(isSuccess);
@@ -194,7 +190,7 @@ describe("communicator", () => {
 
           const body = response.body as Readable;
           let content = "";
-          body.on("data", chunk => {
+          body.on("data", (chunk) => {
             content += chunk;
           });
           body.on("end", () => {
@@ -208,20 +204,18 @@ describe("communicator", () => {
 
   test("with invalid JSON response", async () => {
     const responseBody = "Non-JSON";
-    nock("http://test")
-      .get("/operations/non-json")
-      .reply(200, responseBody);
+    nock("http://test").get("/operations/non-json").reply(200, responseBody);
 
     const error = await communicator
       .json(
         {
           method: "GET",
-          modulePath: "/operations/non-json"
+          modulePath: "/operations/non-json",
         },
-        sdkContext
+        sdkContext,
       )
       .then(() => undefined)
-      .catch(e => e);
+      .catch((e) => e);
     expect(error).not.toBeUndefined();
     expect(error.status).toBe(200);
     expect(error.body).toBe(responseBody);
@@ -230,20 +224,18 @@ describe("communicator", () => {
 
   test("with error", async () => {
     const errorMessage = "Unknown error occurred";
-    nock("http://test")
-      .get("/operations/error")
-      .replyWithError(errorMessage);
+    nock("http://test").get("/operations/error").replyWithError(errorMessage);
 
     const error = await communicator
       .json(
         {
           method: "GET",
-          modulePath: "/operations/error"
+          modulePath: "/operations/error",
         },
-        sdkContext
+        sdkContext,
       )
       .then(() => undefined)
-      .catch(e => e);
+      .catch((e) => e);
     expect(error).not.toBeUndefined();
     expect(error.status).toBeUndefined();
     expect(error.body).toBeUndefined();

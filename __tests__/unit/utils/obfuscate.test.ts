@@ -20,7 +20,7 @@ describe("obfuscate.getObfuscated", () => {
       oauth2ClientId: "dummy",
       oauth2ClientSecret: "dummy",
       oauth2TokenUri: "http://localhost/auth/realms/api/protocol/openid-connect/token",
-      integrator: "Integration tests"
+      integrator: "Integration tests",
     });
   });
 
@@ -36,15 +36,15 @@ describe("obfuscate.getObfuscated", () => {
     const body = {
       amount: {
         currencyCode: "CAD",
-        amount: 2345
+        amount: 2345,
       },
       cardPaymentData: {
         cardData: {
           cardSecurityCode: "123",
           cardNumber: "1234567890123456",
-          expiryDate: "122024"
-        }
-      }
+          expiryDate: "122024",
+        },
+      },
     };
     const expected = JSON.parse(JSON.stringify(body));
     expected.cardPaymentData.cardData.cardSecurityCode = "***";
@@ -58,22 +58,22 @@ describe("obfuscate.getObfuscated", () => {
     const body = {
       amount: {
         currencyCode: "CAD",
-        amount: 2345
+        amount: 2345,
       },
       cardPaymentData: {
         cardData: {
           cardSecurityCode: "123",
           cardNumber: "1234567890123456",
-          expiryDate: "122024"
-        }
-      }
+          expiryDate: "122024",
+        },
+      },
     };
     const expected = JSON.parse(JSON.stringify(body));
     expected.cardPaymentData.cardData.cardSecurityCode = "***";
     expected.cardPaymentData.cardData.cardNumber = "123456******3456";
     expected.cardPaymentData.cardData.expiryDate = "**2024";
 
-    const obfuscationRule: ObfuscationRule = value => value.substring(0, 6) + _.padStart("", 6, "*") + value.substring(12);
+    const obfuscationRule: ObfuscationRule = (value) => value.substring(0, 6) + _.padStart("", 6, "*") + value.substring(12);
     sdkContext.getObfuscationRules().cardNumber = obfuscationRule;
 
     expect(obfuscate.getObfuscated(body, sdkContext)).toBe(JSON.stringify(expected, null, 2));
@@ -81,7 +81,7 @@ describe("obfuscate.getObfuscated", () => {
 
   test("bin", () => {
     const body = {
-      bin: "12345678"
+      bin: "12345678",
     };
     const expected = JSON.parse(JSON.stringify(body));
     expected.bin = "123456**";
@@ -93,16 +93,16 @@ describe("obfuscate.getObfuscated", () => {
     const body = {
       amount: {
         currencyCode: "EUR",
-        amount: 1000
+        amount: 1000,
       },
-      authorizationType: "PRE_AUTHORIZATION"
+      authorizationType: "PRE_AUTHORIZATION",
     };
     expect(obfuscate.getObfuscated(body, sdkContext)).toBe(JSON.stringify(body, null, 2));
   });
 
   test("not matching object", () => {
     const body = {
-      values: [{ name: true }, { name: "12345" }, { name: 12345 }, { name: {} }]
+      values: [{ name: true }, { name: "12345" }, { name: 12345 }, { name: {} }],
     };
     const expected = JSON.parse(JSON.stringify(body));
     expected.values[0].name = "****";
@@ -119,7 +119,7 @@ describe("obfuscate.getObfuscated", () => {
 
     ["Content-Type", "application/json", "application/json"],
     ["content-type", "application/json", "application/json"],
-    ["CONTENT-TYPE", "application/json", "application/json"]
+    ["CONTENT-TYPE", "application/json", "application/json"],
   ];
   each(headersTestData).test("when the header is '%s'", (name, originalValue, expectedObfuscatedValue) => {
     const headers: http.IncomingHttpHeaders = {};
@@ -139,7 +139,7 @@ describe("obfuscate.getObfuscated", () => {
 
     ["Content-Type", "application/json", "****************"],
     ["content-type", "application/json", "****************"],
-    ["CONTENT-TYPE", "application/json", "****************"]
+    ["CONTENT-TYPE", "application/json", "****************"],
   ];
   each(customHeadersTestData).test("when the header is '%s'", (name, originalValue, expectedObfuscatedValue) => {
     const headers: http.IncomingHttpHeaders = {};

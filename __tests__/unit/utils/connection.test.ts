@@ -21,7 +21,7 @@ describe("connection logging", () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     error: (message: any): void => {
       capturedLogs.push({ level: "error", message: message });
-    }
+    },
   };
   let sdkContext: SdkContext;
 
@@ -35,27 +35,30 @@ describe("connection logging", () => {
       oauth2ClientId: "dummy",
       oauth2ClientSecret: "dummy",
       oauth2TokenUri: "http://localhost/auth/realms/api/protocol/openid-connect/token",
-      integrator: "dummy"
+      integrator: "dummy",
     });
   });
   beforeEach(() => {
     capturedLogs.length = 0;
   });
+  afterAll(() => {
+    // nock patches the http modules of the process, which are shared by all test files running in the same worker
+    nock.cleanAll();
+    nock.restore();
+  });
 
   describe("for sendJSON", () => {
-    test("with no request body", done => {
+    test("with no request body", (done) => {
       const path = "/no-request-body";
-      nock("http://test")
-        .get(path)
-        .reply(200, {
-          id: 1
-        });
+      nock("http://test").get(path).reply(200, {
+        id: 1,
+      });
       const options: https.RequestOptions = {
         host: "test",
-        protocol: "https",
+        protocol: "http:",
         port: 80,
         method: "GET",
-        path: path
+        path: path,
       };
 
       connection.sendJSON(options, null, sdkContext, (error, response) => {
@@ -73,23 +76,21 @@ describe("connection logging", () => {
       });
     });
 
-    test("with request body", done => {
+    test("with request body", (done) => {
       const path = "/request-body";
-      nock("http://test")
-        .post(path)
-        .reply(200, {
-          id: 1
-        });
+      nock("http://test").post(path).reply(200, {
+        id: 1,
+      });
       const options: https.RequestOptions = {
         host: "test",
-        protocol: "https",
+        protocol: "http:",
         port: 80,
         method: "POST",
-        path: path
+        path: path,
       };
 
       const postData = {
-        id: 1
+        id: 1,
       };
       const postDataString = JSON.stringify(postData, null, 2);
       connection.sendJSON(options, postData, sdkContext, (error, response) => {
@@ -108,23 +109,21 @@ describe("connection logging", () => {
     });
   });
 
-  test("for sendMultipart", done => {
+  test("for sendMultipart", (done) => {
     const path = "/multipart";
-    nock("http://test")
-      .post(path)
-      .reply(200, {
-        id: 1
-      });
+    nock("http://test").post(path).reply(200, {
+      id: 1,
+    });
     const options: https.RequestOptions = {
       host: "test",
-      protocol: "https",
+      protocol: "http:",
       port: 80,
       method: "POST",
-      path: path
+      path: path,
     };
 
     const postData = {
-      value: "foo"
+      value: "foo",
     };
     connection.sendMultipart(options, postData, "boundary", sdkContext, (error, response) => {
       expect(error).toBeNull();
@@ -141,17 +140,15 @@ describe("connection logging", () => {
     });
   });
 
-  test("with no response body", done => {
+  test("with no response body", (done) => {
     const path = "/no-response-body";
-    nock("http://test")
-      .get(path)
-      .reply(204);
+    nock("http://test").get(path).reply(204);
     const options: https.RequestOptions = {
       host: "test",
-      protocol: "https",
+      protocol: "http:",
       port: 80,
       method: "GET",
-      path: path
+      path: path,
     };
 
     connection.sendJSON(options, null, sdkContext, (error, response) => {
@@ -174,20 +171,18 @@ describe("connection logging", () => {
     });
   });
 
-  test("with JSON response body", done => {
+  test("with JSON response body", (done) => {
     const path = "/json-response-body";
     const responseBody = {
-      id: 1
+      id: 1,
     };
-    nock("http://test")
-      .get(path)
-      .reply(200, responseBody);
+    nock("http://test").get(path).reply(200, responseBody);
     const options: https.RequestOptions = {
       host: "test",
-      protocol: "https",
+      protocol: "http:",
       port: 80,
       method: "GET",
-      path: path
+      path: path,
     };
 
     const responseBodyString = JSON.stringify(responseBody, null, 2);
@@ -211,7 +206,7 @@ describe("connection logging", () => {
     });
   });
 
-  test("with binary response body", done => {
+  test("with binary response body", (done) => {
     const path = "/binary-response-body";
     const responseBody = "Test response";
     const contentLength = responseBody.length;
@@ -222,14 +217,14 @@ describe("connection logging", () => {
       .reply(200, responseBody, {
         "Content-Type": contentType,
         "Content-Length": contentLength.toString(),
-        "Content-Disposition": `attachment; filename="${filename}"`
+        "Content-Disposition": `attachment; filename="${filename}"`,
       });
     const options: https.RequestOptions = {
       host: "test",
-      protocol: "https",
+      protocol: "http:",
       port: 80,
       method: "GET",
-      path: path
+      path: path,
     };
 
     connection.sendJSON(options, null, sdkContext, (error, response) => {
@@ -238,7 +233,7 @@ describe("connection logging", () => {
 
       // No JSON response, so the data must be read explicitly
       let data = "";
-      response!.on("data", chunk => {
+      response!.on("data", (chunk) => {
         data += chunk;
       });
       response!.on("end", () => {
@@ -259,18 +254,16 @@ describe("connection logging", () => {
     });
   });
 
-  test("with error", done => {
+  test("with error", (done) => {
     const path = "/error";
     const errorMessage = "Unknown error occurred";
-    nock("http://test")
-      .get(path)
-      .replyWithError(errorMessage);
+    nock("http://test").get(path).replyWithError(errorMessage);
     const options: https.RequestOptions = {
       host: "test",
-      protocol: "https",
+      protocol: "http:",
       port: 80,
       method: "GET",
-      path: path
+      path: path,
     };
 
     connection.sendJSON(options, null, sdkContext, (error, response) => {

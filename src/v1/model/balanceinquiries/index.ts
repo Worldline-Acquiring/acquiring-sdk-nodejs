@@ -12,6 +12,6 @@ export interface BalanceInquiriesClient {
     acquirerId: string,
     merchantId: string,
     body: ApiBalanceInquiryRequest,
-    paymentContext?: PaymentContext | null
+    paymentContext?: PaymentContext | null,
   ): Promise<SdkResponse<ApiBalanceInquiryResponse, ApiPaymentErrorResponse>>;
 }

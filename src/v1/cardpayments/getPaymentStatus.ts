@@ -7,17 +7,17 @@ import { GetPaymentStatusParams } from "../model/cardpayments";
 import { ApiPaymentErrorResponse, ApiPaymentResource } from "../model/domain";
 
 export function getPaymentStatus(
-  sdkContext: SdkContext
+  sdkContext: SdkContext,
 ): (acquirerId: string, merchantId: string, paymentId: string, params: GetPaymentStatusParams) => Promise<SdkResponse<ApiPaymentResource, ApiPaymentErrorResponse>> {
-  return function(acquirerId, merchantId, paymentId, params): Promise<SdkResponse<ApiPaymentResource, ApiPaymentErrorResponse>> {
+  return function (acquirerId, merchantId, paymentId, params): Promise<SdkResponse<ApiPaymentResource, ApiPaymentErrorResponse>> {
     return json(
       {
         method: "GET",
         modulePath: `/processing/v1/${acquirerId}/${merchantId}/payments/${paymentId}`,
         body: null,
-        paymentContext: params
+        paymentContext: params,
       },
-      sdkContext
+      sdkContext,
     ) as Promise<SdkResponse<ApiPaymentResource, ApiPaymentErrorResponse>>;
   };
 }

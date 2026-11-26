@@ -13,14 +13,14 @@ export const obfuscate: ObfuscationRules = {
   all: obfuscateAll,
   allButLast: obfuscateAllButLast,
   allButFirst: obfuscateAllButFirst,
-  withFixedLength: obfuscateWithFixedLength
+  withFixedLength: obfuscateWithFixedLength,
 };
 
 export const oauth2Scopes: OAuth2Scopes = {
   all: getAllScopes,
   forApiVersion: getScopesForApiVersion,
   forOperation: getScopesForOperation,
-  forOperations: getScopesForOperations
+  forOperations: getScopesForOperations,
 };
 
 /**

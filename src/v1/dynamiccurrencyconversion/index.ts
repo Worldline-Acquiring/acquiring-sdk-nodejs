@@ -7,6 +7,6 @@ import { DynamicCurrencyConversionClient } from "../model/dynamiccurrencyconvers
 
 export function newDynamicCurrencyConversionClient(sdkContext: SdkContext): DynamicCurrencyConversionClient {
   return {
-    requestDccRate: requestDccRate(sdkContext)
+    requestDccRate: requestDccRate(sdkContext),
   };
 }

@@ -10,9 +10,9 @@ import { ApiPaymentErrorResponse, ApiPaymentRequest, ApiPaymentResponse } from "
 const requestSchema = require("../../../schemas/v1/ApiPaymentRequest.json");
 
 export function processPayment(
-  sdkContext: SdkContext
+  sdkContext: SdkContext,
 ): (acquirerId: string, merchantId: string, body: ApiPaymentRequest, paymentContext?: PaymentContext | null) => Promise<SdkResponse<ApiPaymentResponse, ApiPaymentErrorResponse>> {
-  return function(acquirerId, merchantId, body, paymentContext): Promise<SdkResponse<ApiPaymentResponse, ApiPaymentErrorResponse>> {
+  return function (acquirerId, merchantId, body, paymentContext): Promise<SdkResponse<ApiPaymentResponse, ApiPaymentErrorResponse>> {
     // validate body
     const isValidRequest = validate(body, requestSchema);
     if (!isValidRequest.valid) {
@@ -27,9 +27,9 @@ export function processPayment(
         method: "POST",
         modulePath: `/processing/v1/${acquirerId}/${merchantId}/payments`,
         body,
-        paymentContext: paymentContext
+        paymentContext: paymentContext,
       },
-      sdkContext
+      sdkContext,
     ) as Promise<SdkResponse<ApiPaymentResponse, ApiPaymentErrorResponse>>;
   };
 }

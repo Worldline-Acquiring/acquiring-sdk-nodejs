@@ -10,15 +10,15 @@ import { ApiActionResponseForRefund, ApiPaymentErrorResponse, ApiRefundReversalR
 const requestSchema = require("../../../schemas/v1/ApiRefundReversalRequest.json");
 
 export function reverseRefundAuthorization(
-  sdkContext: SdkContext
+  sdkContext: SdkContext,
 ): (
   acquirerId: string,
   merchantId: string,
   refundId: string,
   body: ApiRefundReversalRequest,
-  paymentContext?: PaymentContext | null
+  paymentContext?: PaymentContext | null,
 ) => Promise<SdkResponse<ApiActionResponseForRefund, ApiPaymentErrorResponse>> {
-  return function(acquirerId, merchantId, refundId, body, paymentContext): Promise<SdkResponse<ApiActionResponseForRefund, ApiPaymentErrorResponse>> {
+  return function (acquirerId, merchantId, refundId, body, paymentContext): Promise<SdkResponse<ApiActionResponseForRefund, ApiPaymentErrorResponse>> {
     // validate body
     const isValidRequest = validate(body, requestSchema);
     if (!isValidRequest.valid) {
@@ -33,9 +33,9 @@ export function reverseRefundAuthorization(
         method: "POST",
         modulePath: `/processing/v1/${acquirerId}/${merchantId}/refunds/${refundId}/authorization-reversals`,
         body,
-        paymentContext: paymentContext
+        paymentContext: paymentContext,
       },
-      sdkContext
+      sdkContext,
     ) as Promise<SdkResponse<ApiActionResponseForRefund, ApiPaymentErrorResponse>>;
   };
 }

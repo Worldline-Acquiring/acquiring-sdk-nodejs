@@ -10,15 +10,15 @@ import { ApiPaymentErrorResponse, ApiPaymentReversalRequest, ApiReversalResponse
 const requestSchema = require("../../../schemas/v1/ApiPaymentReversalRequest.json");
 
 export function reverseAuthorization(
-  sdkContext: SdkContext
+  sdkContext: SdkContext,
 ): (
   acquirerId: string,
   merchantId: string,
   paymentId: string,
   body: ApiPaymentReversalRequest,
-  paymentContext?: PaymentContext | null
+  paymentContext?: PaymentContext | null,
 ) => Promise<SdkResponse<ApiReversalResponse, ApiPaymentErrorResponse>> {
-  return function(acquirerId, merchantId, paymentId, body, paymentContext): Promise<SdkResponse<ApiReversalResponse, ApiPaymentErrorResponse>> {
+  return function (acquirerId, merchantId, paymentId, body, paymentContext): Promise<SdkResponse<ApiReversalResponse, ApiPaymentErrorResponse>> {
     // validate body
     const isValidRequest = validate(body, requestSchema);
     if (!isValidRequest.valid) {
@@ -33,9 +33,9 @@ export function reverseAuthorization(
         method: "POST",
         modulePath: `/processing/v1/${acquirerId}/${merchantId}/payments/${paymentId}/authorization-reversals`,
         body,
-        paymentContext: paymentContext
+        paymentContext: paymentContext,
       },
-      sdkContext
+      sdkContext,
     ) as Promise<SdkResponse<ApiReversalResponse, ApiPaymentErrorResponse>>;
   };
 }

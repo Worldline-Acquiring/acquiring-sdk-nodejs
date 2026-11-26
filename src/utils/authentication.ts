@@ -50,7 +50,7 @@ export class OAuth2Authenticator implements Authenticator {
     if (configuration.oauth2Scopes) {
       const tokenType: TokenType = {
         scopes: configuration.oauth2Scopes,
-        promises: []
+        promises: [],
       };
       this.tokenTypeMapper = () => tokenType;
     } else {
@@ -60,10 +60,10 @@ export class OAuth2Authenticator implements Authenticator {
       const tokenTypes: Record<string, TokenType> = {
         "": {
           scopes: getAllScopes().join(" "),
-          promises: []
-        }
+          promises: [],
+        },
       };
-      this.tokenTypeMapper = path => findTokenTypeForPath(tokenTypes, path);
+      this.tokenTypeMapper = (path) => findTokenTypeForPath(tokenTypes, path);
     }
   }
 
@@ -89,18 +89,18 @@ export class OAuth2Authenticator implements Authenticator {
           path: this.oauth2TokenUrl.pathname,
           method: "POST",
           headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-          }
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
         };
         applyProxyConfiguration(options, this.proxy);
         applyConnectionOptions(options, this.connectionOptions);
 
         const h = options.protocol === "https:" ? https : http;
-        const req = h.request(options, res => {
+        const req = h.request(options, (res) => {
           let body = "";
 
           res.setEncoding("utf8");
-          res.on("data", chunk => {
+          res.on("data", (chunk) => {
             body += chunk;
           });
           res.on("end", () => {
@@ -109,23 +109,23 @@ export class OAuth2Authenticator implements Authenticator {
               const accessToken = responseBody.access_token;
               tokenType.accessToken = {
                 accessToken: accessToken,
-                expirationTime: currentTime + responseBody.expires_in * 1000
+                expirationTime: currentTime + responseBody.expires_in * 1000,
               };
               const promises = tokenType.promises;
               tokenType.promises = [];
-              promises.forEach(promise => promise.resolve(`Bearer ${accessToken}`));
+              promises.forEach((promise) => promise.resolve(`Bearer ${accessToken}`));
             } else {
               const error = new Error(`There was an error while retrieving the OAuth2 access token: ${responseBody.error} - ${responseBody.error_description}`);
               const promises = tokenType.promises;
               tokenType.promises = [];
-              promises.forEach(promise => promise.reject(error));
+              promises.forEach((promise) => promise.reject(error));
             }
           });
         });
-        req.on("error", e => {
+        req.on("error", (e) => {
           const promises = tokenType.promises;
           tokenType.promises = [];
-          promises.forEach(promise => promise.reject(e));
+          promises.forEach((promise) => promise.reject(e));
         });
 
         req.write(`grant_type=client_credentials&client_id=${this.oauth2ClientId}&client_secret=${this.oauth2ClientSecret}&scope=${tokenType.scopes}`);

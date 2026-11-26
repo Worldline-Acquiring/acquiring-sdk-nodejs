@@ -12,6 +12,6 @@ export interface AccountVerificationsClient {
     acquirerId: string,
     merchantId: string,
     body: ApiAccountVerificationRequest,
-    paymentContext?: PaymentContext | null
+    paymentContext?: PaymentContext | null,
   ): Promise<SdkResponse<ApiAccountVerificationResponse, ApiPaymentErrorResponse>>;
 }

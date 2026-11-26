@@ -11,9 +11,9 @@ describe("context.integrator", () => {
       oauth2ClientId: "dummy",
       oauth2ClientSecret: "dummy",
       oauth2TokenUri: "http://localhost/auth/realms/api/protocol/openid-connect/token",
-      integrator: ""
+      integrator: "",
     };
-    expect(() => newSdkContext(configuration)).toThrowError("integrator is required");
+    expect(() => newSdkContext(configuration)).toThrow("integrator is required");
   });
 
   test("can be set", () => {
@@ -22,7 +22,7 @@ describe("context.integrator", () => {
       oauth2ClientId: "dummy",
       oauth2ClientSecret: "dummy",
       oauth2TokenUri: "http://localhost/auth/realms/api/protocol/openid-connect/token",
-      integrator: "test-integrator"
+      integrator: "test-integrator",
     };
     const sdkContext = newSdkContext(configuration);
     expect(sdkContext.getIntegrator()).toBe(configuration.integrator);
@@ -33,7 +33,7 @@ describe("context.shoppingCartExtension", () => {
   const input = [
     ["", "test-name", "test-version"],
     ["test-creator", "", "test-version"],
-    ["test-creator", "test-name", ""]
+    ["test-creator", "test-name", ""],
   ];
   test.each(input)("must not have an empty creator, name or version", (creator, name, version) => {
     const configuration: Configuration = {
@@ -45,11 +45,11 @@ describe("context.shoppingCartExtension", () => {
       shoppingCartExtension: {
         creator,
         name,
-        version
-      }
+        version,
+      },
     };
-    expect(() => newSdkContext(configuration)).toThrowError(
-      "shoppingCartExtension is missing a required property (creator / name / version). Your shoppingCartExtension: " + JSON.stringify(configuration.shoppingCartExtension)
+    expect(() => newSdkContext(configuration)).toThrow(
+      "shoppingCartExtension is missing a required property (creator / name / version). Your shoppingCartExtension: " + JSON.stringify(configuration.shoppingCartExtension),
     );
   });
 
@@ -63,8 +63,8 @@ describe("context.shoppingCartExtension", () => {
       shoppingCartExtension: {
         creator: "test-creator",
         name: "test-name",
-        version: "test-version"
-      }
+        version: "test-version",
+      },
     };
     const sdkContext = newSdkContext(configuration);
     expect(sdkContext.getShoppingCartExtension()).toStrictEqual(configuration.shoppingCartExtension);

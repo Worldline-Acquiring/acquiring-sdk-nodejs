@@ -10,14 +10,14 @@ import { ApiBalanceInquiryRequest, ApiBalanceInquiryResponse, ApiPaymentErrorRes
 const requestSchema = require("../../../schemas/v1/ApiBalanceInquiryRequest.json");
 
 export function processBalanceInquiry(
-  sdkContext: SdkContext
+  sdkContext: SdkContext,
 ): (
   acquirerId: string,
   merchantId: string,
   body: ApiBalanceInquiryRequest,
-  paymentContext?: PaymentContext | null
+  paymentContext?: PaymentContext | null,
 ) => Promise<SdkResponse<ApiBalanceInquiryResponse, ApiPaymentErrorResponse>> {
-  return function(acquirerId, merchantId, body, paymentContext): Promise<SdkResponse<ApiBalanceInquiryResponse, ApiPaymentErrorResponse>> {
+  return function (acquirerId, merchantId, body, paymentContext): Promise<SdkResponse<ApiBalanceInquiryResponse, ApiPaymentErrorResponse>> {
     // validate body
     const isValidRequest = validate(body, requestSchema);
     if (!isValidRequest.valid) {
@@ -32,9 +32,9 @@ export function processBalanceInquiry(
         method: "POST",
         modulePath: `/processing/v1/${acquirerId}/${merchantId}/balance-inquiries`,
         body,
-        paymentContext: paymentContext
+        paymentContext: paymentContext,
       },
-      sdkContext
+      sdkContext,
     ) as Promise<SdkResponse<ApiBalanceInquiryResponse, ApiPaymentErrorResponse>>;
   };
 }

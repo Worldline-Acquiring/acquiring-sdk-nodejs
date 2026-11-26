@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-import * as uuid from "uuid";
+import { randomUUID } from "crypto";
 import { assertSuccess } from "../../../src";
 import client, { config } from "../init";
 
@@ -13,7 +13,7 @@ describe("processPayment", () => {
       amount: {
         amount: 200,
         currencyCode: "GBP",
-        numberOfDecimals: 2
+        numberOfDecimals: 2,
       },
       authorizationType: "PRE_AUTHORIZATION",
       transactionTimestamp: new Date().toISOString(),
@@ -26,13 +26,13 @@ describe("processPayment", () => {
         cardData: {
           expiryDate: "122031",
           cardNumber: "4176669999000104",
-          cardSecurityCode: "012"
-        }
+          cardSecurityCode: "012",
+        },
       },
       references: {
-        merchantReference: `your-order-${uuid.v4()}`
+        merchantReference: `your-order-${randomUUID()}`,
       },
-      operationId: uuid.v4()
+      operationId: randomUUID(),
     };
 
     const processResponse = await client.v1.cardPayments.processPayment(config.acquirerId, config.merchantId, body);
@@ -50,7 +50,7 @@ describe("processPayment", () => {
     expect(processResponseBody.totalAuthorizedAmount).toStrictEqual(body.amount);
 
     const query = {
-      returnOperations: true
+      returnOperations: true,
     };
 
     const statusResponse = await client.v1.cardPayments.getPaymentStatus(config.acquirerId, config.merchantId, processResponseBody.paymentId!, query);

@@ -7,6 +7,6 @@ import { TechnicalReversalsClient } from "../model/technicalreversals";
 
 export function newTechnicalReversalsClient(sdkContext: SdkContext): TechnicalReversalsClient {
   return {
-    technicalReversal: technicalReversal(sdkContext)
+    technicalReversal: technicalReversal(sdkContext),
   };
 }

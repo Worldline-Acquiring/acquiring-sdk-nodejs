@@ -19,13 +19,13 @@ describe("OAuth2 authentication", () => {
       const app = express();
       app.use(
         bodyParser.text({
-          type: "*/*"
-        })
+          type: "*/*",
+        }),
       );
       app.post("/auth/realms/api/protocol/openid-connect/token", (req, res) => {
         res.status(200).json({
           access_token: req.body,
-          expires_in: 300
+          expires_in: 300,
         });
       });
       server = app.listen();
@@ -36,7 +36,7 @@ describe("OAuth2 authentication", () => {
         oauth2ClientId: "clientId",
         oauth2ClientSecret: "clientSecret",
         host: "dummy",
-        integrator: "Worldline"
+        integrator: "Worldline",
       };
       const authenticator = new OAuth2Authenticator(configuration);
       const expectedScopes = getAllScopes().join(" ");
@@ -44,7 +44,7 @@ describe("OAuth2 authentication", () => {
       expect(authorization).toBe(`Bearer grant_type=client_credentials&client_id=clientId&client_secret=clientSecret&scope=${expectedScopes}`);
     });
 
-    test("multiple requests", done => {
+    test("multiple requests", (done) => {
       let requestCount = 0;
 
       let returnResponse: () => void = () => setTimeout(() => returnResponse(), 100);
@@ -52,15 +52,15 @@ describe("OAuth2 authentication", () => {
       const app = express();
       app.use(
         bodyParser.text({
-          type: "*/*"
-        })
+          type: "*/*",
+        }),
       );
       app.post("/auth/realms/api/protocol/openid-connect/token", (req, res) => {
         requestCount++;
         returnResponse = (): void => {
           res.status(200).json({
             access_token: req.body,
-            expires_in: 300
+            expires_in: 300,
           });
         };
       });
@@ -72,13 +72,13 @@ describe("OAuth2 authentication", () => {
         oauth2ClientId: "clientId",
         oauth2ClientSecret: "clientSecret",
         host: "dummy",
-        integrator: "Worldline"
+        integrator: "Worldline",
       };
       const authenticator = new OAuth2Authenticator(configuration);
       const expectedScopes = getAllScopes().join(" ");
       let authorizedCount = 0;
       for (let i = 0; i < 10; i++) {
-        authenticator.getAuthorization("", "", "", [], "/operations").then(authorization => {
+        authenticator.getAuthorization("", "", "", [], "/operations").then((authorization) => {
           expect(authorization).toBe(`Bearer grant_type=client_credentials&client_id=clientId&client_secret=clientSecret&scope=${expectedScopes}`);
           expect(requestCount).toBe(1);
           authorizedCount++;
@@ -97,7 +97,7 @@ describe("OAuth2 authentication", () => {
       app.post("/auth/realms/api/protocol/openid-connect/token", (req, res) => {
         res.status(401).json({
           error: "unauthorized_client",
-          error_description: "INVALID_CREDENTIALS: Invalid client credentials"
+          error_description: "INVALID_CREDENTIALS: Invalid client credentials",
         });
       });
       server = app.listen();
@@ -108,14 +108,14 @@ describe("OAuth2 authentication", () => {
         oauth2ClientId: "clientId",
         oauth2ClientSecret: "clientSecret",
         host: "dummy",
-        integrator: "Worldline"
+        integrator: "Worldline",
       };
       const authenticator = new OAuth2Authenticator(configuration);
-      const error = await authenticator.getAuthorization("", "", "", [], "/operations").catch(error => error);
+      const error = await authenticator.getAuthorization("", "", "", [], "/operations").catch((error) => error);
       expect(error?.message).toBe("There was an error while retrieving the OAuth2 access token: unauthorized_client - INVALID_CREDENTIALS: Invalid client credentials");
     });
 
-    test("multiple requests", done => {
+    test("multiple requests", (done) => {
       let requestCount = 0;
 
       let returnResponse: () => void = () => setTimeout(() => returnResponse(), 100);
@@ -126,7 +126,7 @@ describe("OAuth2 authentication", () => {
         returnResponse = (): void => {
           res.status(401).json({
             error: "unauthorized_client",
-            error_description: "INVALID_CREDENTIALS: Invalid client credentials"
+            error_description: "INVALID_CREDENTIALS: Invalid client credentials",
           });
         };
       });
@@ -138,12 +138,12 @@ describe("OAuth2 authentication", () => {
         oauth2ClientId: "clientId",
         oauth2ClientSecret: "clientSecret",
         host: "dummy",
-        integrator: "Worldline"
+        integrator: "Worldline",
       };
       const authenticator = new OAuth2Authenticator(configuration);
       let authorizedCount = 0;
       for (let i = 0; i < 10; i++) {
-        authenticator.getAuthorization("", "", "", [], "/operations").catch(error => {
+        authenticator.getAuthorization("", "", "", [], "/operations").catch((error) => {
           expect(error.message).toBe("There was an error while retrieving the OAuth2 access token: unauthorized_client - INVALID_CREDENTIALS: Invalid client credentials");
           expect(requestCount).toBe(1);
           authorizedCount++;
@@ -165,7 +165,7 @@ describe("OAuth2 authentication", () => {
         requestCount++;
         res.status(200).json({
           access_token: "expiredAccessToken",
-          expires_in: -1
+          expires_in: -1,
         });
       });
       server = app.listen();
@@ -176,7 +176,7 @@ describe("OAuth2 authentication", () => {
         oauth2ClientId: "clientId",
         oauth2ClientSecret: "clientSecret",
         host: "dummy",
-        integrator: "Worldline"
+        integrator: "Worldline",
       };
       const authenticator = new OAuth2Authenticator(configuration);
       const authorization = await authenticator.getAuthorization("", "", "", [], "/operations");
@@ -188,7 +188,7 @@ describe("OAuth2 authentication", () => {
       expect(requestCount).toBe(2);
     });
 
-    test("multiple requests", done => {
+    test("multiple requests", (done) => {
       let requestCount = 0;
 
       let returnResponse: () => void = () => setTimeout(() => returnResponse(), 100);
@@ -199,7 +199,7 @@ describe("OAuth2 authentication", () => {
         returnResponse = (): void => {
           res.status(200).json({
             access_token: "accessToken",
-            expires_in: -1
+            expires_in: -1,
           });
         };
       });
@@ -211,12 +211,12 @@ describe("OAuth2 authentication", () => {
         oauth2ClientId: "clientId",
         oauth2ClientSecret: "clientSecret",
         host: "dummy",
-        integrator: "Worldline"
+        integrator: "Worldline",
       };
       const authenticator = new OAuth2Authenticator(configuration);
       let authorizedCount = 0;
       for (let i = 0; i < 10; i++) {
-        authenticator.getAuthorization("", "", "", [], "/operations").then(authorization => {
+        authenticator.getAuthorization("", "", "", [], "/operations").then((authorization) => {
           expect(authorization).toBe("Bearer accessToken");
           expect(requestCount).toBe(1);
           authorizedCount++;
@@ -240,10 +240,10 @@ describe("OAuth2 authentication", () => {
       oauth2ClientId: "clientId",
       oauth2ClientSecret: "clientSecret",
       host: "dummy",
-      integrator: "Worldline"
+      integrator: "Worldline",
     };
     const authenticator = new OAuth2Authenticator(configuration);
-    const error = await authenticator.getAuthorization("", "", "", [], "/unsupported-path").catch(error => error);
+    const error = await authenticator.getAuthorization("", "", "", [], "/unsupported-path").catch((error) => error);
     expect(error?.message).toBe("Scope could not be found for path /unsupported-path");
   });
 
@@ -251,13 +251,13 @@ describe("OAuth2 authentication", () => {
     const app = express();
     app.use(
       bodyParser.text({
-        type: "*/*"
-      })
+        type: "*/*",
+      }),
     );
     app.post("/auth/realms/api/protocol/openid-connect/token", (req, res) => {
       res.status(200).json({
         access_token: req.body,
-        expires_in: 300
+        expires_in: 300,
       });
     });
     server = app.listen();
@@ -269,7 +269,7 @@ describe("OAuth2 authentication", () => {
       oauth2ClientSecret: "clientSecret",
       oauth2Scopes: "scope1 scope2",
       host: "dummy",
-      integrator: "Worldline"
+      integrator: "Worldline",
     };
     const authenticator = new OAuth2Authenticator(configuration);
     const expectedScopes = "scope1 scope2";

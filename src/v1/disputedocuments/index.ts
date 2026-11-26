@@ -9,6 +9,6 @@ import { DisputeDocumentsClient } from "../model/disputedocuments";
 export function newDisputeDocumentsClient(sdkContext: SdkContext): DisputeDocumentsClient {
   return {
     uploadDisputeDocument: uploadDisputeDocument(sdkContext),
-    getDisputeDocument: getDisputeDocument(sdkContext)
+    getDisputeDocument: getDisputeDocument(sdkContext),
   };
 }

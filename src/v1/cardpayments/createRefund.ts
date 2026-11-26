@@ -10,15 +10,15 @@ import { ApiActionResponseForRefund, ApiPaymentErrorResponse, ApiPaymentRefundRe
 const requestSchema = require("../../../schemas/v1/ApiPaymentRefundRequest.json");
 
 export function createRefund(
-  sdkContext: SdkContext
+  sdkContext: SdkContext,
 ): (
   acquirerId: string,
   merchantId: string,
   paymentId: string,
   body: ApiPaymentRefundRequest,
-  paymentContext?: PaymentContext | null
+  paymentContext?: PaymentContext | null,
 ) => Promise<SdkResponse<ApiActionResponseForRefund, ApiPaymentErrorResponse>> {
-  return function(acquirerId, merchantId, paymentId, body, paymentContext): Promise<SdkResponse<ApiActionResponseForRefund, ApiPaymentErrorResponse>> {
+  return function (acquirerId, merchantId, paymentId, body, paymentContext): Promise<SdkResponse<ApiActionResponseForRefund, ApiPaymentErrorResponse>> {
     // validate body
     const isValidRequest = validate(body, requestSchema);
     if (!isValidRequest.valid) {
@@ -33,9 +33,9 @@ export function createRefund(
         method: "POST",
         modulePath: `/processing/v1/${acquirerId}/${merchantId}/payments/${paymentId}/refunds`,
         body,
-        paymentContext: paymentContext
+        paymentContext: paymentContext,
       },
-      sdkContext
+      sdkContext,
     ) as Promise<SdkResponse<ApiActionResponseForRefund, ApiPaymentErrorResponse>>;
   };
 }

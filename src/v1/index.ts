@@ -25,6 +25,6 @@ export function newV1Client(sdkContext: SdkContext): V1Client {
     ping: newPingClient(sdkContext),
     disputeManagement: newDisputeManagementClient(sdkContext),
     disputeDocuments: newDisputeDocumentsClient(sdkContext),
-    disputeEntries: newDisputeEntriesClient(sdkContext)
+    disputeEntries: newDisputeEntriesClient(sdkContext),
   };
 }

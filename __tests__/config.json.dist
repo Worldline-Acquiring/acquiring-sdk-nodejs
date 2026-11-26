@@ -12,6 +12,5 @@
     "tokenUri": "OAUTH2_TOKEN_URI"
   },
   "integrator": "INTEGRATOR",
-  "enableLogging": false,
-  "httpBinUrl": "http://httpbin.org"
+  "enableLogging": false
 }

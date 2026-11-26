@@ -9,7 +9,7 @@ import {
   ApiRefundRequest,
   ApiRefundResource,
   ApiRefundResponse,
-  ApiRefundReversalRequest
+  ApiRefundReversalRequest,
 } from "../domain";
 
 export interface CardRefundsClient {
@@ -20,7 +20,7 @@ export interface CardRefundsClient {
     acquirerId: string,
     merchantId: string,
     body: ApiRefundRequest,
-    paymentContext?: PaymentContext | null
+    paymentContext?: PaymentContext | null,
   ): Promise<SdkResponse<ApiRefundResponse, ApiPaymentErrorResponse>>;
   /**
    * Resource /processing/v1/{acquirerId}/{merchantId}/refunds/{refundId} - <a href="https://docs.acquiring.worldline-solutions.com/api-reference#tag/Card-Refunds/operation/getRefund">Retrieve card refund</a>
@@ -34,7 +34,7 @@ export interface CardRefundsClient {
     merchantId: string,
     refundId: string,
     body: ApiCaptureRequestForRefund,
-    paymentContext?: PaymentContext | null
+    paymentContext?: PaymentContext | null,
   ): Promise<SdkResponse<ApiActionResponseForRefund, ApiPaymentErrorResponse>>;
   /**
    * Resource /processing/v1/{acquirerId}/{merchantId}/refunds/{refundId}/authorization-reversals - <a href="https://docs.acquiring.worldline-solutions.com/api-reference#tag/Card-Refunds/operation/reverseRefundAuthorization">Reverse refund authorization</a>
@@ -44,7 +44,7 @@ export interface CardRefundsClient {
     merchantId: string,
     refundId: string,
     body: ApiRefundReversalRequest,
-    paymentContext?: PaymentContext | null
+    paymentContext?: PaymentContext | null,
   ): Promise<SdkResponse<ApiActionResponseForRefund, ApiPaymentErrorResponse>>;
 }
 

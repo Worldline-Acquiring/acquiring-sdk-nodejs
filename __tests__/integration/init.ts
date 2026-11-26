@@ -15,7 +15,7 @@ const client = sdk.init({
   oauth2ClientSecret: config.oauth2.clientSecret,
   oauth2TokenUri: config.oauth2.tokenUri,
   integrator: config.integrator,
-  proxy: config.proxy
+  proxy: config.proxy,
 });
 
 export default client;
@@ -31,6 +31,6 @@ export function clientWithOAuth2Scopes(oauth2Scopes: string | undefined): Client
     oauth2TokenUri: config.oauth2.tokenUri,
     oauth2Scopes,
     integrator: config.integrator,
-    proxy: config.proxy
+    proxy: config.proxy,
   });
 }

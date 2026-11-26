@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-import * as uuid from "uuid";
+import { randomUUID } from "crypto";
 import { assertSuccess } from "../../src";
 import { clientWithOAuth2Scopes, config } from "./init";
 
@@ -9,28 +9,28 @@ import { clientWithOAuth2Scopes, config } from "./init";
  */
 describe("OAuth2 authentication", () => {
   const body = {
-    operationId: uuid.v4(),
+    operationId: randomUUID(),
     targetCurrency: "EUR",
     cardPaymentData: {
       bin: "41766699",
-      brand: "VISA"
+      brand: "VISA",
     },
     pointOfSaleData: {
-      terminalId: "12345678"
+      terminalId: "12345678",
     },
     transaction: {
       amount: {
         amount: 200,
         currencyCode: "GBP",
-        numberOfDecimals: 2
+        numberOfDecimals: 2,
       },
       transactionType: "PAYMENT",
-      transactionTimestamp: new Date().toISOString()
-    }
+      transactionTimestamp: new Date().toISOString(),
+    },
   };
 
   const validScopes = ["processing_dcc_rate", "processing_dcc_rate services_ping", "", undefined];
-  test.each(validScopes)("called with scopes '%s'", async oauth2Scopes => {
+  test.each(validScopes)("called with scopes '%s'", async (oauth2Scopes) => {
     const response = await clientWithOAuth2Scopes(oauth2Scopes).v1.dynamicCurrencyConversion.requestDccRate(config.acquirerId, config.merchantId, body);
     expect(response.status).toBe(200);
     expect(response.body).not.toBeNull();
@@ -51,7 +51,7 @@ describe("OAuth2 authentication", () => {
 
     await clientWithOAuth2Scopes("processing_dcc_rate invalid_scope")
       .v1.dynamicCurrencyConversion.requestDccRate(config.acquirerId, config.merchantId, body)
-      .catch(e => {
+      .catch((e) => {
         expect(e).toBeInstanceOf(Error);
         expect(e.message).toMatch(/There was an error while retrieving the OAuth2 access token: invalid_scope - .*/);
       });

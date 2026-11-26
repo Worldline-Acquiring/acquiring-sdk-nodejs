@@ -10,9 +10,9 @@ import { ApiPaymentErrorResponse, SearchDisputesRequest, SearchDisputesResponse 
 const requestSchema = require("../../../schemas/v1/SearchDisputesRequest.json");
 
 export function searchDisputes(
-  sdkContext: SdkContext
+  sdkContext: SdkContext,
 ): (body: SearchDisputesRequest, paymentContext?: PaymentContext | null) => Promise<SdkResponse<SearchDisputesResponse, ApiPaymentErrorResponse>> {
-  return function(body, paymentContext): Promise<SdkResponse<SearchDisputesResponse, ApiPaymentErrorResponse>> {
+  return function (body, paymentContext): Promise<SdkResponse<SearchDisputesResponse, ApiPaymentErrorResponse>> {
     // validate body
     const isValidRequest = validate(body, requestSchema);
     if (!isValidRequest.valid) {
@@ -27,9 +27,9 @@ export function searchDisputes(
         method: "POST",
         modulePath: `/dispute-management/v1/disputes/search`,
         body,
-        paymentContext: paymentContext
+        paymentContext: paymentContext,
       },
-      sdkContext
+      sdkContext,
     ) as Promise<SdkResponse<SearchDisputesResponse, ApiPaymentErrorResponse>>;
   };
 }

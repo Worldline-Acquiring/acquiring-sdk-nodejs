@@ -19,7 +19,7 @@ export interface DisputeManagementClient {
   acceptDisputeLiability(
     disputeId: string,
     body: AcceptDisputeLiabilityRequest,
-    paymentContext?: PaymentContext | null
+    paymentContext?: PaymentContext | null,
   ): Promise<SdkResponse<DisputeResponse, ApiPaymentErrorResponse>>;
   /**
    * Resource /dispute-management/v1/disputes/{disputeId}/submit-evidence - <a href="https://docs.acquiring.worldline-solutions.com/api-reference#tag/Dispute-Management/operation/submitEvidence">Submit Evidence</a>

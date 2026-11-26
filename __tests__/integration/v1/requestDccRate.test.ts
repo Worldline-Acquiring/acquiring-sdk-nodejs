@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-import * as uuid from "uuid";
+import { randomUUID } from "crypto";
 import { assertSuccess } from "../../../src";
 import client, { config } from "../init";
 
@@ -10,24 +10,24 @@ import client, { config } from "../init";
 describe("requestDccRate", () => {
   test("called successfully", async () => {
     const body = {
-      operationId: uuid.v4(),
+      operationId: randomUUID(),
       targetCurrency: "EUR",
       cardPaymentData: {
         bin: "41766699",
-        brand: "VISA"
+        brand: "VISA",
       },
       pointOfSaleData: {
-        terminalId: "12345678"
+        terminalId: "12345678",
       },
       transaction: {
         amount: {
           amount: 200,
           currencyCode: "GBP",
-          numberOfDecimals: 2
+          numberOfDecimals: 2,
         },
         transactionType: "PAYMENT",
-        transactionTimestamp: new Date().toISOString()
-      }
+        transactionTimestamp: new Date().toISOString(),
+      },
     };
 
     const response = await client.v1.dynamicCurrencyConversion.requestDccRate(config.acquirerId, config.merchantId, body);

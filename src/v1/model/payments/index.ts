@@ -14,7 +14,7 @@ import {
   ApiPaymentResource,
   ApiPaymentResponse,
   ApiPaymentReversalRequest,
-  ApiReversalResponse
+  ApiReversalResponse,
 } from "../domain";
 
 export interface PaymentsClient {
@@ -25,7 +25,7 @@ export interface PaymentsClient {
     acquirerId: string,
     merchantId: string,
     body: ApiPaymentRequest,
-    paymentContext?: PaymentContext | null
+    paymentContext?: PaymentContext | null,
   ): Promise<SdkResponse<ApiPaymentResponse, ApiPaymentErrorResponse>>;
   /**
    * Resource /processing/v1/{acquirerId}/{merchantId}/payments/{paymentId} - <a href="https://docs.acquiring.worldline-solutions.com/api-reference#tag/Payments/operation/getPaymentStatus">Retrieve payment</a>
@@ -39,7 +39,7 @@ export interface PaymentsClient {
     merchantId: string,
     paymentId: string,
     body: ApiCaptureRequest,
-    paymentContext?: PaymentContext | null
+    paymentContext?: PaymentContext | null,
   ): Promise<SdkResponse<ApiActionResponse, ApiPaymentErrorResponse>>;
   /**
    * Resource /processing/v1/{acquirerId}/{merchantId}/payments/{paymentId}/authorization-reversals - <a href="https://docs.acquiring.worldline-solutions.com/api-reference#tag/Payments/operation/reverseAuthorization">Reverse authorization</a>
@@ -49,7 +49,7 @@ export interface PaymentsClient {
     merchantId: string,
     paymentId: string,
     body: ApiPaymentReversalRequest,
-    paymentContext?: PaymentContext | null
+    paymentContext?: PaymentContext | null,
   ): Promise<SdkResponse<ApiReversalResponse, ApiPaymentErrorResponse>>;
   /**
    * Resource /processing/v1/{acquirerId}/{merchantId}/payments/{paymentId}/increments - <a href="https://docs.acquiring.worldline-solutions.com/api-reference#tag/Payments/operation/incrementPayment">Increment authorization</a>
@@ -59,7 +59,7 @@ export interface PaymentsClient {
     merchantId: string,
     paymentId: string,
     body: ApiIncrementRequest,
-    paymentContext?: PaymentContext | null
+    paymentContext?: PaymentContext | null,
   ): Promise<SdkResponse<ApiIncrementResponse, ApiPaymentErrorResponse>>;
   /**
    * Resource /processing/v1/{acquirerId}/{merchantId}/payments/{paymentId}/refunds - <a href="https://docs.acquiring.worldline-solutions.com/api-reference#tag/Payments/operation/createRefund">Refund payment</a>
@@ -69,7 +69,7 @@ export interface PaymentsClient {
     merchantId: string,
     paymentId: string,
     body: ApiPaymentRefundRequest,
-    paymentContext?: PaymentContext | null
+    paymentContext?: PaymentContext | null,
   ): Promise<SdkResponse<ApiActionResponseForRefund, ApiPaymentErrorResponse>>;
 }
 

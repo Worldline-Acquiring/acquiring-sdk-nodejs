@@ -13,6 +13,6 @@ export interface TechnicalReversalsClient {
     merchantId: string,
     operationId: string,
     body: ApiTechnicalReversalRequest,
-    paymentContext?: PaymentContext | null
+    paymentContext?: PaymentContext | null,
   ): Promise<SdkResponse<ApiTechnicalReversalResponse, ApiPaymentErrorResponse>>;
 }

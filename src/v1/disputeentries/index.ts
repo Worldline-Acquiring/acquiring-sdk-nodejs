@@ -7,6 +7,6 @@ import { DisputeEntriesClient } from "../model/disputeentries";
 
 export function newDisputeEntriesClient(sdkContext: SdkContext): DisputeEntriesClient {
   return {
-    searchDisputeEntries: searchDisputeEntries(sdkContext)
+    searchDisputeEntries: searchDisputeEntries(sdkContext),
   };
 }

@@ -3,7 +3,7 @@
 import * as _ from "lodash";
 import { IncomingMessage } from "http";
 import { RequestOptions } from "https";
-import * as uuid from "uuid";
+import { randomUUID } from "crypto";
 import * as headers from "../utils/headers";
 import { applyConnectionOptions, applyProxyConfiguration, sendJSON, sendMultipart } from "../utils/connection";
 import { Header, JsonRequest, MultipartFormDataRequest, PaymentContext, SdkContext, SdkRequest, SdkResponse, SdkResponseError } from "../model";
@@ -33,7 +33,7 @@ async function prepareRequest(request: SdkRequest, sdkContext: SdkContext, optio
   options.headers = options.headers || {};
   options.headers["Date"] = date;
   options.headers["Content-Type"] = contentType;
-  options.headers["Trace-Id"] = uuid.v4();
+  options.headers["Trace-Id"] = randomUUID();
   if (request.paymentContext?.extraHeaders) {
     for (const header of request.paymentContext.extraHeaders) {
       options.headers[header.key] = _.trim(header.value.replace(/\r?\n[\\s&&[^\r\n]]*/g, " "));
@@ -47,7 +47,7 @@ async function prepareRequest(request: SdkRequest, sdkContext: SdkContext, optio
   extraHeaders.push(serverMetaInfo);
 
   const authorization = await sdkContext.getAuthenticator().getAuthorization(request.method, contentType, date, extraHeaders, options.path);
-  options.headers.Authorization = authorization;
+  options.headers["Authorization"] = authorization;
 
   applyProxyConfiguration(options, sdkContext.getProxy());
   applyConnectionOptions(options, sdkContext.getConnectionOptions());
@@ -58,7 +58,7 @@ function handleResponse(
   paymentContext: PaymentContext | null | undefined,
   expectBinaryResponse: boolean,
   resolve: (response: SdkResponse<unknown, unknown>) => void,
-  reject: (error: SdkResponseError) => void
+  reject: (error: SdkResponseError) => void,
 ): void {
   const statusCode = response.statusCode!;
   const isSuccess = statusCode >= 200 && statusCode < 300;
@@ -76,14 +76,14 @@ function handleResponse(
       file: {
         contentType,
         contentLength: headers.contentLength(response.headers),
-        filename: headers.dispositionFilename(response.headers)
-      }
+        filename: headers.dispositionFilename(response.headers),
+      },
     } as SdkResponse<unknown, unknown>);
   } else {
     let body = "";
 
     response.setEncoding("utf8");
-    response.on("data", chunk => {
+    response.on("data", (chunk) => {
       body += chunk;
     });
     response.on("end", () => {
@@ -92,7 +92,7 @@ function handleResponse(
         resolve({
           status: statusCode,
           body,
-          isSuccess
+          isSuccess,
         });
       } catch (e) {
         const error = e as SdkResponseError;
@@ -109,7 +109,7 @@ function createOptions(sdkContext: SdkContext): RequestOptions {
   return {
     host: endpoint.host,
     port: endpoint.port,
-    protocol: endpoint.scheme + ":"
+    protocol: endpoint.scheme + ":",
   };
 }
 
@@ -129,7 +129,7 @@ export async function json(request: JsonRequest, sdkContext: SdkContext): Promis
 
 export async function multipart(request: MultipartFormDataRequest, sdkContext: SdkContext): Promise<SdkResponse<unknown, unknown>> {
   const options = createOptions(sdkContext);
-  const boundary = uuid.v4();
+  const boundary = randomUUID();
   await prepareRequest(request, sdkContext, options, "multipart/form-data; boundary=" + boundary);
   return new Promise((resolve, reject) => {
     sendMultipart(options, request.body, boundary, sdkContext, (error, response) => {
